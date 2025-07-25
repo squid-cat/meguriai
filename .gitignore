@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+
+# Next.js build output
+.next/
+
+# TypeScript
+*.tsbuildinfo
+
+# Local env files
+.env*
+
+# OS
+.DS_Store
+
+# その他
+*.log 
