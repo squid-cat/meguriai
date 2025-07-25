@@ -9,6 +9,7 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
+			"!prisma/**",
 			"!**/node_modules/**",
 			"!**/pnpm-lock.yaml",
 			"!public/**",
