@@ -1,10 +1,10 @@
 import { Hono } from "hono";
-import hello from "./_hello";
 import { handle } from "hono/vercel";
+import hello from "./_hello";
 
-const app = new Hono().basePath('/api');
+const app = new Hono().basePath("/api");
 
-const route = app.route('/hello', hello);
+const route = app.route("/hello", hello);
 
 export type AppType = typeof route;
 

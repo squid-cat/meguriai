@@ -1,26 +1,29 @@
 {
-  "name": "meguriai",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "hono": "^4.8.7",
-    "next": "^15.4.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.1.0",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "typescript": "^5.8.3"
-  }
+	"name": "meguriai",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"check": "biome check && tsc --noEmit",
+		"fix": "biome check --write"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"hono": "^4.8.7",
+		"next": "^15.4.4",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.1.2",
+		"@types/node": "^24.1.0",
+		"@types/react": "^19.1.8",
+		"@types/react-dom": "^19.1.6",
+		"typescript": "^5.8.3"
+	}
 }
