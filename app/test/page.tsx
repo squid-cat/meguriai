@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { createClient } from "@/utils/api-client";
+import { client } from "@/utils/api-client";
 
 export default function TestPage() {
 	const [text, setText] = useState("");
@@ -12,7 +12,6 @@ export default function TestPage() {
 	const [loading, setLoading] = useState(false);
 
 	const getPosts = useCallback(async () => {
-		const client = createClient();
 		const res = await client.test.$get();
 		const posts = (await res.json()).tests;
 		setPosts(posts);
@@ -27,7 +26,6 @@ export default function TestPage() {
 		setLoading(true);
 
 		try {
-			const client = createClient();
 			const res = await client.test.$post({ json: { text } });
 
 			await res.json();
