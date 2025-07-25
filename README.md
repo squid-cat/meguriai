@@ -7,7 +7,7 @@ docker compose up -d
 
 DB テーブルの作成とスキーマ更新 - prisma/migrations にある SQL が順次実行されます
 ```bash
-pnpm run migrate && pnpm run prisma:generate
+pnpm run prisma:migrate && pnpm run prisma:generate
 ```
 
 ライブラリのインストール
