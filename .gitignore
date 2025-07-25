@@ -8,7 +8,7 @@ node_modules/
 *.tsbuildinfo
 
 # Local env files
-.env*
+.env
 
 # OS
 .DS_Store

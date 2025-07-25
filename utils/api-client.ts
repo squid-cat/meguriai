@@ -1,22 +1,13 @@
 import { hc } from "hono/client";
-import { headers } from "next/headers";
 import type { AppType } from "../app/api/[...route]/route";
 
-async function getBaseUrl(): Promise<string> {
-	// クライアント側の場合
-	if (typeof window !== "undefined") {
-		return window.location.origin;
-	}
-
-	// サーバー側の場合
-	const headersList = await headers();
-	const host = headersList.get("host");
-	const protocol = headersList.get("x-forwarded-proto") || "http";
-	return `${protocol}://${host}`;
+function getBaseUrl(): string {
+	// 環境変数が設定されていればそれを使用、なければ相対パス
+	return process.env.NEXT_PUBLIC_API_BASE_URL || "";
 }
 
-// 非同期でクライアントを作成する関数
-export async function createClient() {
-	const baseUrl = await getBaseUrl();
+// クライアントを作成する関数
+export function createClient() {
+	const baseUrl = getBaseUrl();
 	return hc<AppType>(baseUrl).api;
 }
