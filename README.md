@@ -1,5 +1,10 @@
 ## 起動方法
 
+.env.example から .env を作成
+```bash
+cp .env.example .env
+```
+
 Docker で postgres の起動
 ```bash
 docker compose up -d
