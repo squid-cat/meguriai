@@ -1,26 +1,27 @@
 ## 起動方法
+以下の順にコマンドを実行してください。
 
-.env.example から .env を作成
+1. .env.example から .env を作成
 ```bash
 cp .env.example .env
 ```
 
-Docker で postgres の起動
+2. Docker で postgres の起動
 ```bash
 docker compose up -d
 ```
 
-DB テーブルの作成とスキーマ更新 - prisma/migrations にある SQL が順次実行されます
-```bash
-pnpm run prisma:migrate && pnpm run prisma:generate
-```
-
-ライブラリのインストール
+3. ライブラリのインストール
 ```bash
 pnpm i
 ```
 
-起動
+4. DB テーブルの作成とスキーマ更新 - prisma/migrations にある SQL が順次実行されます
+```bash
+pnpm run prisma:migrate && pnpm run prisma:generate
+```
+
+5. 起動
 ```bash
 pnpm run dev
 ```
