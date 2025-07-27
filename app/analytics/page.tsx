@@ -1,8 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
 	Bar,
 	BarChart,
@@ -12,7 +10,8 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { authApi, workRecordsApi } from "@/lib/api";
+import { useAuth } from "@/hooks/useAuth";
+import { workRecordsApi } from "@/lib/api";
 
 interface WorkRecord {
 	id: string;
@@ -30,56 +29,21 @@ interface DailyStats {
 }
 
 export default function Analytics() {
-	const { data: session, status } = useSession();
-	const router = useRouter();
+	const { user, loading: authLoading, authenticated } = useAuth();
 	const [workRecords, setWorkRecords] = useState<WorkRecord[]>([]);
 	const [dailyStats, setDailyStats] = useState<DailyStats[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [_currentUserId, setCurrentUserId] = useState<string | null>(null);
 
-	useEffect(() => {
-		if (status === "unauthenticated") {
-			router.push("/auth/signin");
-		}
-	}, [status, router]);
-
-	useEffect(() => {
-		// 実際のAPIから分析データを取得
+	// 認証が完了したら分析データを取得
+	if (authenticated && user && workRecords.length === 0 && !loading) {
 		const fetchAnalyticsData = async () => {
-			if (!session) return;
-
 			try {
 				setLoading(true);
 
-				// 1. 現在のユーザー情報を取得
-				const authStatus = await authApi.getAuthStatus();
-
-				if (!authStatus || "error" in authStatus || !authStatus.authenticated) {
-					router.push("/auth/signin");
-					return;
-				}
-
-				if (authStatus.needsSetup) {
-					console.log("User needs setup");
-					return;
-				}
-
-				const currentUser = (
-					authStatus as unknown as {
-						user: { id: string; name: string; avatarId: number };
-					}
-				).user;
-				if (!currentUser) {
-					console.error("No current user found");
-					return;
-				}
-
-				setCurrentUserId(currentUser.id);
-
-				// 2. 並列で作業記録と統計を取得
+				// 並列で作業記録と統計を取得
 				const [recordsResponse, statsResponse] = await Promise.all([
-					workRecordsApi.getWorkRecords(currentUser.id, 50, 0),
-					workRecordsApi.getWorkStats(currentUser.id),
+					workRecordsApi.getWorkRecords(user.id, 50, 0),
+					workRecordsApi.getWorkStats(user.id),
 				]);
 
 				if (
@@ -238,17 +202,15 @@ export default function Analytics() {
 			}
 		};
 
-		if (session) {
-			fetchAnalyticsData();
-		}
-	}, [session, router]);
+		fetchAnalyticsData();
+	}
 
 	const handleSignOut = async () => {
 		const { signOut } = await import("next-auth/react");
 		await signOut({ callbackUrl: "/" });
 	};
 
-	if (status === "loading" || loading) {
+	if (authLoading || loading) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
@@ -256,7 +218,7 @@ export default function Analytics() {
 		);
 	}
 
-	if (!session) {
+	if (!authenticated || !user) {
 		return null;
 	}
 
@@ -281,9 +243,7 @@ export default function Analytics() {
 					<div className="flex justify-between items-center py-4">
 						<div className="flex items-center space-x-4">
 							<h1 className="text-2xl font-bold text-primary-600">Meguriai</h1>
-							<span className="text-gray-600">
-								こんにちは、{session.user?.name}さん
-							</span>
+							<span className="text-gray-600">こんにちは、{user.name}さん</span>
 						</div>
 
 						<div className="flex items-center space-x-4">

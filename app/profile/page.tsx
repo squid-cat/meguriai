@@ -1,9 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { authApi, usersApi } from "@/lib/api";
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { usersApi } from "@/lib/api";
 
 interface Avatar {
 	id: number;
@@ -12,13 +11,11 @@ interface Avatar {
 }
 
 export default function Profile() {
-	const { data: session, status } = useSession();
-	const router = useRouter();
+	const { user, loading: authLoading, authenticated } = useAuth();
 	const [userName, setUserName] = useState("");
 	const [selectedAvatarId, setSelectedAvatarId] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
-	const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
 	// 利用可能なアバター一覧
 	const avatars: Avatar[] = [
@@ -34,63 +31,17 @@ export default function Profile() {
 		{ id: 10, name: "キツネ", imagePath: "/images/avatars/fox-1.svg" },
 	];
 
-	useEffect(() => {
-		if (status === "unauthenticated") {
-			router.push("/auth/signin");
+	// 認証が完了したらユーザー情報を設定
+	if (authenticated && user && !loading) {
+		if (userName === "" && selectedAvatarId === 1) {
+			setUserName(user.name || "");
+			setSelectedAvatarId(user.avatarId || 1);
+			setLoading(false);
 		}
-	}, [status, router]);
-
-	useEffect(() => {
-		// 実際のAPIから現在のユーザー情報を取得
-		const fetchUserProfile = async () => {
-			if (!session) return;
-
-			try {
-				setLoading(true);
-
-				// 認証状態を確認してユーザー情報を取得
-				const authStatus = await authApi.getAuthStatus();
-
-				if (!authStatus || "error" in authStatus || !authStatus.authenticated) {
-					router.push("/auth/signin");
-					return;
-				}
-
-				if (authStatus.needsSetup) {
-					console.log("User needs setup");
-					return;
-				}
-
-				const currentUser = (
-					authStatus as unknown as {
-						user: { id: string; name: string; avatarId: number };
-					}
-				).user;
-				if (!currentUser) {
-					console.error("No current user found");
-					return;
-				}
-
-				setCurrentUserId(currentUser.id);
-				setUserName(currentUser.name || "");
-				setSelectedAvatarId(currentUser.avatarId || 1);
-			} catch (error) {
-				console.error("Failed to fetch user profile:", error);
-				// エラー時はセッション情報をフォールバック
-				setUserName(session?.user?.name || "");
-				setSelectedAvatarId(1);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		if (session) {
-			fetchUserProfile();
-		}
-	}, [session, router]);
+	}
 
 	const handleSave = async () => {
-		if (!currentUserId) {
+		if (!user?.id) {
 			alert("ユーザー情報が取得できません");
 			return;
 		}
@@ -99,7 +50,7 @@ export default function Profile() {
 
 		try {
 			// 実際のAPIでプロフィールを更新
-			const updateResponse = await usersApi.updateUser(currentUserId, {
+			const updateResponse = await usersApi.updateUser(user.id, {
 				name: userName.trim(),
 				avatarId: selectedAvatarId,
 			});
@@ -122,7 +73,7 @@ export default function Profile() {
 		await signOut({ callbackUrl: "/" });
 	};
 
-	if (status === "loading" || loading) {
+	if (authLoading || loading) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
@@ -130,7 +81,7 @@ export default function Profile() {
 		);
 	}
 
-	if (!session) {
+	if (!authenticated || !user) {
 		return null;
 	}
 
@@ -146,9 +97,7 @@ export default function Profile() {
 					<div className="flex justify-between items-center py-4">
 						<div className="flex items-center space-x-4">
 							<h1 className="text-2xl font-bold text-primary-600">Meguriai</h1>
-							<span className="text-gray-600">
-								こんにちは、{session.user?.name}さん
-							</span>
+							<span className="text-gray-600">こんにちは、{user.name}さん</span>
 						</div>
 
 						<div className="flex items-center space-x-4">
@@ -296,7 +245,7 @@ export default function Profile() {
 
 							<div className="flex justify-between">
 								<span className="text-gray-600">メールアドレス</span>
-								<span className="font-medium">{session.user?.email}</span>
+								<span className="font-medium">{user.email}</span>
 							</div>
 
 							<div className="flex justify-between">

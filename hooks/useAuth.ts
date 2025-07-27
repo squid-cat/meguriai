@@ -1,6 +1,6 @@
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
+import { useSession } from "next-auth/react";
+import { useCallback, useEffect, useState } from "react";
 import { authApi } from "@/lib/api";
 
 interface AuthUser {
@@ -30,7 +30,7 @@ export function useAuth(): UseAuthReturn {
 
 		const checkAuthStatus = async () => {
 			if (status === "loading") return;
-			
+
 			if (status === "unauthenticated" || !session) {
 				if (isMounted) {
 					setAuthenticated(false);
@@ -43,7 +43,7 @@ export function useAuth(): UseAuthReturn {
 
 			try {
 				if (isMounted) setLoading(true);
-				
+
 				const authStatus = await authApi.getAuthStatus();
 
 				if (!isMounted) return; // コンポーネントがアンマウントされた場合は処理を中断
@@ -63,9 +63,11 @@ export function useAuth(): UseAuthReturn {
 					return;
 				}
 
-				const currentUser = (authStatus as unknown as {
-					user: AuthUser;
-				}).user;
+				const currentUser = (
+					authStatus as unknown as {
+						user: AuthUser;
+					}
+				).user;
 
 				setAuthenticated(true);
 				setUser(currentUser);
@@ -98,4 +100,4 @@ export function useAuth(): UseAuthReturn {
 		authenticated,
 		needsSetup,
 	};
-} 
+}

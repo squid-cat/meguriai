@@ -1,10 +1,10 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PomodoroTimer from "@/components/PomodoroTimer";
-import { dashboardApi, usersApi, workRecordsApi } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
+import { dashboardApi, usersApi, workRecordsApi } from "@/lib/api";
 
 interface DashboardData {
 	totalPoints: number;
@@ -104,7 +104,7 @@ export default function Dashboard() {
 
 		if (authenticated && user) {
 			initializeDashboard();
-			
+
 			// 30秒間隔でダッシュボードデータを更新
 			const interval = setInterval(async () => {
 				try {
@@ -281,7 +281,7 @@ export default function Dashboard() {
 		);
 	}
 
-	if (!session) {
+	if (!authenticated || !user) {
 		return null;
 	}
 
@@ -293,9 +293,7 @@ export default function Dashboard() {
 					<div className="flex justify-between items-center py-4">
 						<div className="flex items-center space-x-4">
 							<h1 className="text-2xl font-bold text-primary-600">Meguriai</h1>
-							<span className="text-gray-600">
-								こんにちは、{session.user?.name}さん
-							</span>
+							<span className="text-gray-600">こんにちは、{user.name}さん</span>
 						</div>
 
 						<div className="flex items-center space-x-4">

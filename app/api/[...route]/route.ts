@@ -11,15 +11,18 @@ import workRecords from "./_work-records";
 const app = new Hono().basePath("/api");
 
 // CORS設定を追加
-app.use("*", cors({
-	origin: [
-		"http://localhost:3000",
-		"https://meguriai-squid-pom.up.railway.app"
-	],
-	allowHeaders: ["Content-Type", "Authorization"],
-	allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-	credentials: true,
-}));
+app.use(
+	"*",
+	cors({
+		origin: [
+			"http://localhost:3000",
+			"https://meguriai-squid-pom.up.railway.app",
+		],
+		allowHeaders: ["Content-Type", "Authorization"],
+		allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+		credentials: true,
+	}),
+);
 
 const route = app
 	.route("/hello", hello)
