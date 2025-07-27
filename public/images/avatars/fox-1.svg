@@ -1,0 +1,37 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fox head -->
+  <ellipse cx="50" cy="50" rx="22" ry="20" fill="#FF6347"/>
+  
+  <!-- Fox ears -->
+  <polygon points="35,30 25,15 45,25" fill="#FF6347"/>
+  <polygon points="65,30 75,15 55,25" fill="#FF6347"/>
+  <polygon points="35,25 30,18 40,22" fill="#FFF"/>
+  <polygon points="65,25 70,18 60,22" fill="#FFF"/>
+  
+  <!-- Fox snout -->
+  <ellipse cx="50" cy="55" rx="8" ry="6" fill="#FFF"/>
+  
+  <!-- Fox eyes -->
+  <circle cx="42" cy="45" r="3" fill="#000"/>
+  <circle cx="58" cy="45" r="3" fill="#000"/>
+  <circle cx="43" cy="44" r="1" fill="#FFF"/>
+  <circle cx="59" cy="44" r="1" fill="#FFF"/>
+  
+  <!-- Fox nose -->
+  <ellipse cx="50" cy="53" rx="2" ry="1" fill="#000"/>
+  
+  <!-- Fox mouth -->
+  <path d="M45 58 Q50 60 55 58" stroke="#000" stroke-width="1" fill="none"/>
+  
+  <!-- Fox body -->
+  <ellipse cx="50" cy="75" rx="18" ry="15" fill="#FF6347"/>
+  <ellipse cx="50" cy="78" rx="12" ry="10" fill="#FFF"/>
+  
+  <!-- Fox paws -->
+  <ellipse cx="38" cy="88" rx="4" ry="6" fill="#FF6347"/>
+  <ellipse cx="62" cy="88" rx="4" ry="6" fill="#FF6347"/>
+  
+  <!-- Fox tail -->
+  <path d="M68 70 Q85 60 90 75 Q85 90 75 85" fill="#FF6347"/>
+  <path d="M75 75 Q85 70 88 80 Q85 85 80 82" fill="#FFF"/>
+</svg> 

@@ -1,0 +1,22 @@
+<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tree trunk -->
+  <rect x="130" y="280" width="40" height="120" fill="#8B4513" rx="5"/>
+  
+  <!-- Tree leaves (multiple layers for depth) -->
+  <ellipse cx="150" cy="220" rx="80" ry="70" fill="#228B22" opacity="0.8"/>
+  <ellipse cx="150" cy="200" rx="70" ry="60" fill="#32CD32" opacity="0.9"/>
+  <ellipse cx="150" cy="180" rx="60" ry="50" fill="#00FF32"/>
+  
+  <!-- Tree top for work points display -->
+  <circle cx="150" cy="140" r="25" fill="#FFD700" stroke="#FFA500" stroke-width="3"/>
+  
+  <!-- Work points text area -->
+  <circle cx="150" cy="140" r="20" fill="#FFF8DC"/>
+  <text x="150" y="148" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#8B4513">
+    <tspan id="work-points">0</tspan>
+    <tspan font-size="10">pt</tspan>
+  </text>
+  
+  <!-- Ground -->
+  <ellipse cx="150" cy="380" rx="120" ry="20" fill="#90EE90" opacity="0.6"/>
+</svg> 

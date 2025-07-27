@@ -1,0 +1,25 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <circle cx="50" cy="35" r="18" fill="#F4C2A1"/>
+  
+  <!-- Hair -->
+  <path d="M32 25 Q50 12 68 25 Q68 35 50 28 Q32 35 32 25" fill="#FFD700"/>
+  
+  <!-- Eyes -->
+  <circle cx="44" cy="32" r="2" fill="#000"/>
+  <circle cx="56" cy="32" r="2" fill="#000"/>
+  
+  <!-- Mouth -->
+  <path d="M45 38 Q50 42 55 38" stroke="#000" stroke-width="1" fill="none"/>
+  
+  <!-- Body -->
+  <rect x="40" y="50" width="20" height="30" fill="#E74C3C" rx="10"/>
+  
+  <!-- Arms -->
+  <rect x="25" y="55" width="15" height="8" fill="#F4C2A1" rx="4"/>
+  <rect x="60" y="55" width="15" height="8" fill="#F4C2A1" rx="4"/>
+  
+  <!-- Legs -->
+  <rect x="42" y="75" width="7" height="20" fill="#8E44AD" rx="3"/>
+  <rect x="51" y="75" width="7" height="20" fill="#8E44AD" rx="3"/>
+</svg> 

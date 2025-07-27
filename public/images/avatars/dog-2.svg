@@ -1,0 +1,39 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dog head -->
+  <ellipse cx="50" cy="45" rx="28" ry="22" fill="#FFF"/>
+  
+  <!-- Dog spots -->
+  <ellipse cx="40" cy="35" rx="6" ry="4" fill="#8B4513"/>
+  <ellipse cx="60" cy="40" rx="8" ry="5" fill="#8B4513"/>
+  
+  <!-- Dog ears -->
+  <ellipse cx="35" cy="30" rx="8" ry="15" fill="#8B4513" transform="rotate(-30 35 30)"/>
+  <ellipse cx="65" cy="30" rx="8" ry="15" fill="#8B4513" transform="rotate(30 65 30)"/>
+  
+  <!-- Dog snout -->
+  <ellipse cx="50" cy="52" rx="12" ry="8" fill="#FFE4E1"/>
+  
+  <!-- Dog eyes -->
+  <circle cx="42" cy="38" r="3" fill="#000"/>
+  <circle cx="58" cy="38" r="3" fill="#000"/>
+  <circle cx="43" cy="37" r="1" fill="#FFF"/>
+  <circle cx="59" cy="37" r="1" fill="#FFF"/>
+  
+  <!-- Dog nose -->
+  <ellipse cx="50" cy="50" rx="3" ry="2" fill="#000"/>
+  
+  <!-- Dog mouth -->
+  <path d="M50 54 Q45 58 40 55" stroke="#000" stroke-width="1" fill="none"/>
+  <path d="M50 54 Q55 58 60 55" stroke="#000" stroke-width="1" fill="none"/>
+  
+  <!-- Dog body -->
+  <ellipse cx="50" cy="75" rx="20" ry="18" fill="#FFF"/>
+  <ellipse cx="45" cy="70" rx="5" ry="3" fill="#8B4513"/>
+  
+  <!-- Dog paws -->
+  <ellipse cx="38" cy="88" rx="4" ry="6" fill="#FFE4E1"/>
+  <ellipse cx="62" cy="88" rx="4" ry="6" fill="#FFE4E1"/>
+  
+  <!-- Dog tail -->
+  <path d="M68 70 Q78 65 82 75 Q78 85 72 82" fill="#FFF"/>
+</svg> 
