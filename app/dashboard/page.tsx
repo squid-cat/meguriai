@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { signOut } from "next-auth/react";
+import { useState } from "react";
 import PomodoroTimer from "@/components/PomodoroTimer";
-import { authApi, dashboardApi, usersApi, workRecordsApi } from "@/lib/api";
+import { dashboardApi, usersApi, workRecordsApi } from "@/lib/api";
+import { useAuth } from "@/hooks/useAuth";
 
 interface DashboardData {
 	totalPoints: number;
@@ -20,8 +20,7 @@ interface TodayStats {
 }
 
 export default function Dashboard() {
-	const { data: session, status } = useSession();
-	const router = useRouter();
+	const { user, loading: authLoading, authenticated } = useAuth();
 	const [dashboardData, setDashboardData] = useState<DashboardData>({
 		totalPoints: 0,
 		activeUsers: [],
@@ -36,53 +35,16 @@ export default function Dashboard() {
 	const [manualWorkTime, setManualWorkTime] = useState("");
 	const [manualWorkMemo, setManualWorkMemo] = useState("");
 	const [loading, setLoading] = useState(true);
-	const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (status === "unauthenticated") {
-			router.push("/auth/signin");
-		}
-	}, [status, router]);
-
-	useEffect(() => {
-		// 認証状態とダッシュボードデータを取得
+		// 認証が完了したらダッシュボードデータを取得
 		const initializeDashboard = async () => {
-			if (!session) return;
+			if (!authenticated || !user) return;
 
 			try {
 				setLoading(true);
 
-				// 1. 認証状態を確認
-				const authStatus = await authApi.getAuthStatus();
-
-				if (!authStatus || "error" in authStatus) {
-					console.error("Auth status error:", authStatus);
-					router.push("/auth/signin");
-					return;
-				}
-
-				if (!authStatus.authenticated) {
-					router.push("/auth/signin");
-					return;
-				}
-
-				if (authStatus.needsSetup) {
-					// 初回ログイン：セットアップが必要
-					// TODO: セットアップページに遷移するか、モーダルを表示
-					console.log("User needs setup");
-					return;
-				}
-
-				const currentUser = (
-					authStatus as unknown as {
-						user: { id: string; name: string; avatarId: number };
-					}
-				).user;
-				if (currentUser) {
-					setCurrentUserId(currentUser.id);
-				}
-
-				// 2. ダッシュボードデータを取得
+				// ダッシュボードデータを取得
 				const dashboardResponse = await dashboardApi.getDashboardData();
 
 				if (!dashboardResponse || "error" in dashboardResponse) {
@@ -104,62 +66,53 @@ export default function Dashboard() {
 								}>;
 							}
 						).activeUsers || [],
-					currentUser: currentUser
-						? {
-								id: currentUser.id,
-								name: currentUser.name,
-								avatarId: currentUser.avatarId,
-							}
-						: null,
+					currentUser: {
+						id: user.id,
+						name: user.name,
+						avatarId: user.avatarId,
+					},
 				});
 
-				// 3. 今日の実績を取得
-				if (currentUser?.id) {
-					try {
-						const todayResponse = await usersApi.getUserToday(currentUser.id);
-						if (todayResponse && !("error" in todayResponse)) {
-							setTodayStats({
-								totalMinutes:
-									(todayResponse as unknown as { totalMinutes: number })
-										.totalMinutes || 0,
-								pomodoroCount:
-									(todayResponse as unknown as { pomodoroCount: number })
-										.pomodoroCount || 0,
-								manualCount:
-									(todayResponse as unknown as { manualCount: number })
-										.manualCount || 0,
-								totalRecords:
-									(todayResponse as unknown as { totalRecords: number })
-										.totalRecords || 0,
-							});
-						}
-					} catch (error) {
-						console.error("Failed to fetch today stats:", error);
+				// 今日の実績を取得
+				try {
+					const todayResponse = await usersApi.getUserToday(user.id);
+					if (todayResponse && !("error" in todayResponse)) {
+						setTodayStats({
+							totalMinutes:
+								(todayResponse as unknown as { totalMinutes: number })
+									.totalMinutes || 0,
+							pomodoroCount:
+								(todayResponse as unknown as { pomodoroCount: number })
+									.pomodoroCount || 0,
+							manualCount:
+								(todayResponse as unknown as { manualCount: number })
+									.manualCount || 0,
+							totalRecords:
+								(todayResponse as unknown as { totalRecords: number })
+									.totalRecords || 0,
+						});
 					}
+				} catch (error) {
+					console.error("Failed to fetch today stats:", error);
 				}
 			} catch (error) {
 				console.error("Failed to initialize dashboard:", error);
-				// エラー時はダミーデータで表示を継続
-				setDashboardData({
-					totalPoints: 0,
-					activeUsers: [],
-					currentUser: {
-						id: "temp",
-						name: session?.user?.name || "未設定",
-						avatarId: 1,
-					},
-				});
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		if (session) {
+		if (authenticated && user) {
 			initializeDashboard();
+			
 			// 30秒間隔でダッシュボードデータを更新
 			const interval = setInterval(async () => {
 				try {
-					const dashboardResponse = await dashboardApi.getDashboardData();
+					const [dashboardResponse, todayResponse] = await Promise.all([
+						dashboardApi.getDashboardData(),
+						usersApi.getUserToday(user.id),
+					]);
+
 					if (dashboardResponse && !("error" in dashboardResponse)) {
 						setDashboardData((prev) => ({
 							...prev,
@@ -179,25 +132,21 @@ export default function Dashboard() {
 						}));
 					}
 
-					// 今日の実績も定期更新
-					if (currentUserId) {
-						const todayResponse = await usersApi.getUserToday(currentUserId);
-						if (todayResponse && !("error" in todayResponse)) {
-							setTodayStats({
-								totalMinutes:
-									(todayResponse as unknown as { totalMinutes: number })
-										.totalMinutes || 0,
-								pomodoroCount:
-									(todayResponse as unknown as { pomodoroCount: number })
-										.pomodoroCount || 0,
-								manualCount:
-									(todayResponse as unknown as { manualCount: number })
-										.manualCount || 0,
-								totalRecords:
-									(todayResponse as unknown as { totalRecords: number })
-										.totalRecords || 0,
-							});
-						}
+					if (todayResponse && !("error" in todayResponse)) {
+						setTodayStats({
+							totalMinutes:
+								(todayResponse as unknown as { totalMinutes: number })
+									.totalMinutes || 0,
+							pomodoroCount:
+								(todayResponse as unknown as { pomodoroCount: number })
+									.pomodoroCount || 0,
+							manualCount:
+								(todayResponse as unknown as { manualCount: number })
+									.manualCount || 0,
+							totalRecords:
+								(todayResponse as unknown as { totalRecords: number })
+									.totalRecords || 0,
+						});
 					}
 				} catch (error) {
 					console.error("Failed to refresh dashboard data:", error);
@@ -206,17 +155,17 @@ export default function Dashboard() {
 
 			return () => clearInterval(interval);
 		}
-	}, [session, router, currentUserId]);
+	}, [authenticated, user]);
 
 	const handlePomodoroComplete = async (workPoints: number) => {
-		if (!currentUserId) {
+		if (!user?.id) {
 			console.error("No current user ID for pomodoro completion");
 			return;
 		}
 
 		try {
 			await workRecordsApi.completePomodoroSession({
-				userId: currentUserId,
+				userId: user.id,
 				workPoints: Math.round(workPoints),
 			});
 			console.log(`ポモドーロ完了: ${workPoints}分`);
@@ -224,7 +173,7 @@ export default function Dashboard() {
 			// ダッシュボードデータと今日の実績を再取得
 			const [dashboardResponse, todayResponse] = await Promise.all([
 				dashboardApi.getDashboardData(),
-				usersApi.getUserToday(currentUserId),
+				usersApi.getUserToday(user.id),
 			]);
 
 			if (dashboardResponse && !("error" in dashboardResponse)) {
@@ -265,7 +214,7 @@ export default function Dashboard() {
 			return;
 		}
 
-		if (!currentUserId) {
+		if (!user?.id) {
 			console.error("No current user ID for manual work record");
 			alert("ユーザー情報が取得できません");
 			return;
@@ -273,7 +222,7 @@ export default function Dashboard() {
 
 		try {
 			await workRecordsApi.createWorkRecord({
-				userId: currentUserId,
+				userId: user.id,
 				workPoints: workTime,
 				memo: manualWorkMemo.trim() || undefined,
 			});
@@ -286,7 +235,7 @@ export default function Dashboard() {
 			// ダッシュボードデータと今日の実績を再取得
 			const [dashboardResponse, todayResponse] = await Promise.all([
 				dashboardApi.getDashboardData(),
-				usersApi.getUserToday(currentUserId),
+				usersApi.getUserToday(user.id),
 			]);
 
 			if (dashboardResponse && !("error" in dashboardResponse)) {
@@ -324,7 +273,7 @@ export default function Dashboard() {
 		await signOut({ callbackUrl: "/" });
 	};
 
-	if (status === "loading" || loading) {
+	if (authLoading || loading) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
