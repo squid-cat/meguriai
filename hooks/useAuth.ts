@@ -15,6 +15,14 @@ interface UseAuthReturn {
 	needsSetup: boolean;
 }
 
+// NextAuth.js の session.user を拡張する型定義
+interface ExtendedUser {
+	id?: string;
+	name?: string | null;
+	email?: string | null;
+	avatarId?: number;
+}
+
 export function useAuth(): UseAuthReturn {
 	const { data: session, status } = useSession();
 	const prevUserRef = useRef<AuthUser | null>(null);
@@ -29,12 +37,13 @@ export function useAuth(): UseAuthReturn {
 			prevUserRef.current = null;
 			return null;
 		}
-		
+
+		const extendedUser = session.user as ExtendedUser;
 		const newUser: AuthUser = {
-			id: (session.user as any).id || "temp-user-id",
-			name: session.user.name || "",
-			email: session.user.email || "",
-			avatarId: (session.user as any).avatarId || 1,
+			id: extendedUser.id || "temp-user-id",
+			name: extendedUser.name || "",
+			email: extendedUser.email || "",
+			avatarId: extendedUser.avatarId || 1,
 		};
 
 		// 前回の値と比較して、実際に変更があった場合のみ新しいオブジェクトを返す

@@ -2,6 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+// WebKit対応のAudioContext型定義
+declare global {
+	interface Window {
+		webkitAudioContext?: typeof AudioContext;
+	}
+}
+
 interface PomodoroSettings {
 	workMinutes: number;
 	breakMinutes: number;
@@ -99,9 +106,11 @@ export default function PomodoroTimer({ onComplete }: PomodoroTimerProps) {
 	const initAudio = useCallback(() => {
 		if (typeof window !== "undefined" && !audioContextRef.current) {
 			try {
-				audioContextRef.current = new (
-					window.AudioContext || (window as any).webkitAudioContext
-				)();
+				const AudioContextClass =
+					window.AudioContext || window.webkitAudioContext;
+				if (AudioContextClass) {
+					audioContextRef.current = new AudioContextClass();
+				}
 			} catch (error) {
 				console.error("AudioContext initialization failed:", error);
 			}

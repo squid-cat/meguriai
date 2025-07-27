@@ -1,8 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import PomodoroTimer from "@/components/PomodoroTimer";
 import { useAuth } from "@/hooks/useAuth";
 import { dashboardApi, usersApi, workRecordsApi } from "@/lib/api";
@@ -49,10 +49,6 @@ export default function Dashboard() {
 		// 認証が完了したらダッシュボードデータを取得
 		const initializeDashboard = async () => {
 			if (!authenticated || !user) return;
-			
-			const userId = user.id;
-			const userName = user.name;
-			const userAvatarId = user.avatarId;
 
 			try {
 				setLoading(true);

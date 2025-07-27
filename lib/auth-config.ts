@@ -3,6 +3,15 @@ import { PrismaClient } from "@prisma/client";
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+// NextAuth.js の session.user を拡張する型定義
+interface ExtendedUser {
+	id?: string;
+	name?: string | null;
+	email?: string | null;
+	image?: string | null;
+	avatarId?: number;
+}
+
 // グローバルなPrismaクライアント（開発環境で複数インスタンス化を防ぐ）
 const globalForPrisma = globalThis as unknown as {
 	prisma: PrismaClient | undefined;
@@ -36,7 +45,7 @@ export const authOptions: NextAuthOptions = {
 					});
 
 					if (dbUser) {
-						(session.user as any) = {
+						(session.user as ExtendedUser) = {
 							...session.user,
 							id: dbUser.id,
 							name: dbUser.name || session.user.name,
@@ -47,7 +56,7 @@ export const authOptions: NextAuthOptions = {
 				} catch (error) {
 					console.error("Failed to fetch user data for session:", error);
 					// エラーが発生してもセッションは返す
-					(session.user as any) = {
+					(session.user as ExtendedUser) = {
 						...session.user,
 						id: user.id,
 						avatarId: 1,

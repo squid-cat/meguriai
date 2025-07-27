@@ -85,6 +85,7 @@ export const usersApi = {
 		userId: string,
 		data: { name?: string; avatarId?: number },
 	) => {
+		// biome-ignore lint/suspicious/noExplicitAny: Hono client type inference requires any
 		const res = await (client.api.users[":userId"] as any).$put({
 			param: { userId },
 			json: data,
