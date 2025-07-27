@@ -23,10 +23,10 @@ const app = new Hono()
 				},
 			});
 
-			const totalPoints = todayRecords.reduce(
-				(sum, record) => sum + record.workMinutes,
-				0,
-			);
+					const totalPoints = todayRecords.reduce(
+			(sum: number, record: { workMinutes: number }) => sum + record.workMinutes,
+			0,
+		);
 
 			// 今日アクティブなユーザーを取得（作業記録がある人）
 			const activeUsers = await prisma.user.findMany({
@@ -49,7 +49,7 @@ const app = new Hono()
 			});
 
 			// レスポンス形式を調整
-			const formattedActiveUsers = activeUsers.map((user) => ({
+			const formattedActiveUsers = activeUsers.map((user: { id: string; name: string | null; avatarId: number }) => ({
 				id: user.id,
 				name: user.name || "未設定",
 				avatarId: user.avatarId,
