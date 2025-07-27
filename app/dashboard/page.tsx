@@ -2,6 +2,7 @@
 
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import PomodoroTimer from "@/components/PomodoroTimer";
 import { useAuth } from "@/hooks/useAuth";
 import { dashboardApi, usersApi, workRecordsApi } from "@/lib/api";
@@ -21,6 +22,7 @@ interface TodayStats {
 
 export default function Dashboard() {
 	const { user, loading: authLoading, authenticated } = useAuth();
+	const router = useRouter();
 	const [dashboardData, setDashboardData] = useState<DashboardData>({
 		totalPoints: 0,
 		activeUsers: [],
@@ -36,10 +38,21 @@ export default function Dashboard() {
 	const [manualWorkMemo, setManualWorkMemo] = useState("");
 	const [loading, setLoading] = useState(true);
 
+	// 認証チェックとリダイレクト
+	useEffect(() => {
+		if (!authLoading && !authenticated) {
+			router.push("/auth/signin");
+		}
+	}, [authLoading, authenticated, router]);
+
 	useEffect(() => {
 		// 認証が完了したらダッシュボードデータを取得
 		const initializeDashboard = async () => {
 			if (!authenticated || !user) return;
+			
+			const userId = user.id;
+			const userName = user.name;
+			const userAvatarId = user.avatarId;
 
 			try {
 				setLoading(true);
@@ -274,6 +287,14 @@ export default function Dashboard() {
 	};
 
 	if (authLoading || loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+			</div>
+		);
+	}
+
+	if (authLoading) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>

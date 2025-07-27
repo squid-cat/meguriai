@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { usersApi } from "@/lib/api";
 
@@ -12,10 +13,18 @@ interface Avatar {
 
 export default function Profile() {
 	const { user, loading: authLoading, authenticated } = useAuth();
+	const router = useRouter();
 	const [userName, setUserName] = useState("");
 	const [selectedAvatarId, setSelectedAvatarId] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
+
+	// 認証チェックとリダイレクト
+	useEffect(() => {
+		if (!authLoading && !authenticated) {
+			router.push("/auth/signin");
+		}
+	}, [authLoading, authenticated, router]);
 
 	// 利用可能なアバター一覧
 	const avatars: Avatar[] = [

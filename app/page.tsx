@@ -1,10 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
 	const { loading, authenticated } = useAuth();
+	const router = useRouter();
+
+	// 認証済みユーザーをダッシュボードにリダイレクト
+	useEffect(() => {
+		if (!loading && authenticated) {
+			router.push("/dashboard");
+		}
+	}, [loading, authenticated, router]);
 
 	// ローディング中または既に認証済みの場合は適切に処理
 	if (loading) {

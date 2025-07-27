@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
 	Bar,
 	BarChart,
@@ -28,8 +29,25 @@ interface DailyStats {
 	manualCount: number;
 }
 
+interface WorkStats {
+	totalMinutes: number;
+	pomodoroCount: number;
+	manualCount: number;
+	workDays: number;
+	dailyStats: DailyStats[];
+}
+
 export default function Analytics() {
 	const { user, loading: authLoading, authenticated } = useAuth();
+	const router = useRouter();
+	
+	// 認証チェックとリダイレクト
+	useEffect(() => {
+		if (!authLoading && !authenticated) {
+			router.push("/auth/signin");
+		}
+	}, [authLoading, authenticated, router]);
+
 	const [workRecords, setWorkRecords] = useState<WorkRecord[]>([]);
 	const [dailyStats, setDailyStats] = useState<DailyStats[]>([]);
 	const [loading, setLoading] = useState(true);
