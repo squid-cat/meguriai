@@ -45,7 +45,9 @@ export default function Analytics() {
 	const [loading, setLoading] = useState(true);
 
 	// 認証が完了したら分析データを取得
-	if (authenticated && user && workRecords.length === 0 && !loading) {
+	useEffect(() => {
+		if (!authenticated || !user) return;
+		if (workRecords.length > 0) return;
 		const fetchAnalyticsData = async () => {
 			try {
 				setLoading(true);
@@ -213,7 +215,7 @@ export default function Analytics() {
 		};
 
 		fetchAnalyticsData();
-	}
+	}, [authenticated, user, workRecords.length]);
 
 	const handleSignOut = async () => {
 		const { signOut } = await import("next-auth/react");

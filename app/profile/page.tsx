@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { usersApi } from "@/lib/api";
 
@@ -18,6 +18,7 @@ export default function Profile() {
 	const [selectedAvatarId, setSelectedAvatarId] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
+	const initializedRef = useRef(false);
 
 	// 認証チェックとリダイレクト
 	useEffect(() => {
@@ -41,13 +42,14 @@ export default function Profile() {
 	];
 
 	// 認証が完了したらユーザー情報を設定
-	if (authenticated && user && !loading) {
-		if (userName === "" && selectedAvatarId === 1) {
-			setUserName(user.name || "");
-			setSelectedAvatarId(user.avatarId || 1);
-			setLoading(false);
-		}
-	}
+	useEffect(() => {
+		if (!authenticated || !user || initializedRef.current) return;
+		
+		setUserName(user.name || "");
+		setSelectedAvatarId(user.avatarId || 1);
+		setLoading(false);
+		initializedRef.current = true;
+	}, [authenticated, user]);
 
 	const handleSave = async () => {
 		if (!user?.id) {
