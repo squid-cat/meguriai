@@ -14,7 +14,9 @@
 		"prisma:studio": "prisma studio",
 		"prisma:format": "prisma format",
 		"prisma:generate": "prisma generate",
-		"prisma:deploy": "prisma migrate deploy"
+		"prisma:deploy": "prisma migrate deploy",
+		"sessions:cleanup": "node scripts/cleanup-sessions.js",
+		"sessions:reset": "node scripts/reset-all-sessions.js"
 	},
 	"keywords": [],
 	"author": "",

@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { authApi } from "@/lib/api";
 
 interface AuthUser {
@@ -31,13 +31,28 @@ export function useAuth(): UseAuthReturn {
 		const checkAuthStatus = async () => {
 			if (status === "loading") return;
 
+			// 現在のパスを確認
+			const currentPath = window.location.pathname;
+			const isSignInPage = currentPath === "/auth/signin";
+			const isPublicPage = currentPath === "/" || isSignInPage;
+
 			if (status === "unauthenticated" || !session) {
 				if (isMounted) {
 					setAuthenticated(false);
 					setUser(null);
 					setLoading(false);
-					router.push("/auth/signin");
+					
+					// パブリックページでない場合のみリダイレクト
+					if (!isPublicPage) {
+						router.push("/auth/signin");
+					}
 				}
+				return;
+			}
+
+			// セッションが存在する場合、サインインページからダッシュボードにリダイレクト
+			if (isSignInPage && session) {
+				router.push("/dashboard");
 				return;
 			}
 
@@ -50,16 +65,24 @@ export function useAuth(): UseAuthReturn {
 
 				if (!authStatus || "error" in authStatus) {
 					console.error("Auth status error:", authStatus);
-					setAuthenticated(false);
-					setUser(null);
-					router.push("/auth/signin");
+					if (isMounted) {
+						setAuthenticated(false);
+						setUser(null);
+						if (!isPublicPage) {
+							router.push("/auth/signin");
+						}
+					}
 					return;
 				}
 
 				if (!authStatus.authenticated) {
-					setAuthenticated(false);
-					setUser(null);
-					router.push("/auth/signin");
+					if (isMounted) {
+						setAuthenticated(false);
+						setUser(null);
+						if (!isPublicPage) {
+							router.push("/auth/signin");
+						}
+					}
 					return;
 				}
 
@@ -69,15 +92,19 @@ export function useAuth(): UseAuthReturn {
 					}
 				).user;
 
-				setAuthenticated(true);
-				setUser(currentUser);
-				setNeedsSetup(authStatus.needsSetup);
+				if (isMounted) {
+					setAuthenticated(true);
+					setUser(currentUser);
+					setNeedsSetup(authStatus.needsSetup);
+				}
 			} catch (error) {
 				if (isMounted) {
 					console.error("Failed to check auth status:", error);
 					setAuthenticated(false);
 					setUser(null);
-					router.push("/auth/signin");
+					if (!isPublicPage) {
+						router.push("/auth/signin");
+					}
 				}
 			} finally {
 				if (isMounted) setLoading(false);
