@@ -39,6 +39,7 @@ pnpm run prisma:generate
 - **コードフォーマッター**: Biome設定に従う
 - **型安全性**: TypeScript strict mode
 - **言語**: 全てのコメント、メッセージ、ユーザー向けテキストは日本語
+- **UIコンポーネント**: shadcnを使用し、shadcnの思想に沿って実装する
 
 ## ワークフロー
 
