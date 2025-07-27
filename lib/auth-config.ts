@@ -21,12 +21,42 @@ export const authOptions: NextAuthOptions = {
 		}),
 	],
 	callbacks: {
-		async session({ session }) {
+		async session({ session, user }) {
+			// データベースからユーザー情報を取得してセッションに含める
+			if (session.user && user?.id) {
+				try {
+					const dbUser = await prisma.user.findUnique({
+						where: { id: user.id },
+						select: {
+							id: true,
+							name: true,
+							email: true,
+							avatarId: true,
+						},
+					});
+
+					if (dbUser) {
+						(session.user as any) = {
+							...session.user,
+							id: dbUser.id,
+							name: dbUser.name || session.user.name,
+							email: dbUser.email || session.user.email,
+							avatarId: dbUser.avatarId || 1,
+						};
+					}
+				} catch (error) {
+					console.error("Failed to fetch user data for session:", error);
+					// エラーが発生してもセッションは返す
+					(session.user as any) = {
+						...session.user,
+						id: user.id,
+						avatarId: 1,
+					};
+				}
+			}
 			return session;
 		},
 		async signIn() {
-			// Prisma AdapterがNextAuth用のテーブルを管理するので、
-			// ここでは特別な処理は不要
 			return true;
 		},
 	},

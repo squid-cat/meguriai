@@ -1,21 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { getSession, signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignIn() {
 	const [isLoading, setIsLoading] = useState(false);
-	const router = useRouter();
+	const { loading, authenticated } = useAuth();
 
-	useEffect(() => {
-		// すでにログインしている場合はメイン画面にリダイレクト
-		getSession().then((session) => {
-			if (session) {
-				router.push("/dashboard");
-			}
-		});
-	}, [router]);
+	// ローディング中または既に認証済みの場合は何も表示しない（フリッカリング防止）
+	if (loading || authenticated) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+			</div>
+		);
+	}
 
 	const handleGoogleSignIn = async () => {
 		setIsLoading(true);

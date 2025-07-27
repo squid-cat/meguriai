@@ -1,21 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
-	const { data: session, status } = useSession();
-	const router = useRouter();
+	const { loading, authenticated } = useAuth();
 
-	useEffect(() => {
-		if (session) {
-			router.push("/dashboard");
-		}
-	}, [session, router]);
+	// ローディング中または既に認証済みの場合は適切に処理
+	if (loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+			</div>
+		);
+	}
 
-	if (status === "loading") {
+	// 認証済みの場合は何も表示しない（useAuthフックがリダイレクトを処理）
+	if (authenticated) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
