@@ -41,7 +41,7 @@ export function useAuth(): UseAuthReturn {
 					setAuthenticated(false);
 					setUser(null);
 					setLoading(false);
-					
+
 					// パブリックページでない場合のみリダイレクト
 					if (!isPublicPage) {
 						router.push("/auth/signin");
