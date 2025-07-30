@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { GratitudeMessage, TeamMember } from "../types";
 import { MemberSelector } from "./MemberSelector";
+import { QuantumButton } from "./ui/QuantumButton";
 
 interface MessageSendFormProps {
 	members: TeamMember[];
@@ -43,8 +44,8 @@ export function MessageSendForm({
 		return Object.keys(newErrors).length === 0;
 	};
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
+	const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
+		e?.preventDefault();
 
 		if (!validateForm()) {
 			return;
@@ -80,7 +81,9 @@ export function MessageSendForm({
 			});
 
 			// 受信者情報を取得してサクセスコールバックを呼び出し
-			const recipients = members.filter(member => selectedMembers.includes(member.id));
+			const recipients = members.filter((member) =>
+				selectedMembers.includes(member.id),
+			);
 			onSendSuccess(recipients);
 
 			// フォームリセット
@@ -120,7 +123,7 @@ export function MessageSendForm({
 			<div>
 				<label
 					htmlFor="message"
-					className="block text-lg font-bold text-slate-800 mb-3"
+					className="block text-xl font-bold bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-4"
 				>
 					💬 メッセージ
 				</label>
@@ -131,8 +134,8 @@ export function MessageSendForm({
 					placeholder="あなたの「ありがとう」を、心を込めて伝えてください..."
 					rows={4}
 					className={`
-            w-full px-5 py-4 border-2 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-200 focus:border-orange-400 transition-all resize-none bg-gradient-to-br from-orange-50/70 to-pink-50/70 backdrop-blur-sm
-            ${errors.message ? "border-red-300 bg-gradient-to-br from-red-50/70 to-pink-50/70" : "border-orange-200 hover:border-orange-300"}
+            w-full px-6 py-5 border-3 rounded-3xl focus:outline-none focus:ring-4 focus:ring-orange-300/50 focus:border-orange-500 transition-all resize-none bg-gradient-to-br from-orange-50/80 via-pink-50/80 to-purple-50/80 backdrop-blur-xl shadow-xl font-medium text-slate-800 placeholder-slate-500
+            ${errors.message ? "border-red-400 bg-gradient-to-br from-red-50/80 to-pink-50/80 shadow-red-200/50" : "border-orange-300/50 hover:border-orange-400/70 shadow-orange-200/30"}
           `}
 					disabled={isSubmitting}
 				/>
@@ -154,36 +157,28 @@ export function MessageSendForm({
 
 			{/* 送信ボタン */}
 			<div className="flex justify-center">
-				<button
-					type="submit"
+				<QuantumButton
+					onClick={() => handleSubmit()}
 					disabled={
 						isSubmitting || selectedMembers.length === 0 || !message.trim()
 					}
-					className={`
-						px-8 py-4 rounded-2xl text-base font-bold transition-all transform
-						${
-							isSubmitting || selectedMembers.length === 0 || !message.trim()
-								? "bg-slate-300 text-slate-500 cursor-not-allowed"
-								: "bg-gradient-to-r from-orange-400 to-pink-500 text-white shadow-xl hover:shadow-2xl hover:scale-105 hover:from-orange-500 hover:to-pink-600"
-						}
-					`}
+					variant="primary"
+					className="px-12 py-5 text-lg"
 				>
-					<span className="flex items-center justify-center">
+					<span className="flex items-center justify-center gap-3">
 						{isSubmitting ? (
 							<>
-								<svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-								</svg>
+								<div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
 								送信中...
 							</>
 						) : (
 							<>
+								<span className="text-2xl">✨</span>
 								「ありがとう」を送る
 							</>
 						)}
 					</span>
-				</button>
+				</QuantumButton>
 			</div>
 		</form>
 	);

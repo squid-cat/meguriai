@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { GratitudeMessage } from "../types";
+import { QuantumButton } from "./ui/QuantumButton";
 
 interface NotificationPopupProps {
 	messages: GratitudeMessage[];
@@ -60,7 +61,7 @@ export function NotificationPopup({
           ${isVisible ? "opacity-100" : "opacity-0"}
         `}
 				onClick={handleClose}
-				onKeyDown={(e) => e.key === 'Escape' && handleClose()}
+				onKeyDown={(e) => e.key === "Escape" && handleClose()}
 				role="button"
 				tabIndex={0}
 			/>
@@ -151,37 +152,37 @@ export function NotificationPopup({
 				{/* ナビゲーション（複数メッセージがある場合） */}
 				{messages.length > 1 && (
 					<div className="flex items-center justify-between mb-6">
-						<button
-							type="button"
+						<QuantumButton
 							onClick={handlePrevious}
 							disabled={currentMessageIndex === 0}
-							className="px-4 py-2 bg-gradient-to-r from-orange-100/80 to-pink-100/80 text-orange-700 rounded-2xl font-medium hover:from-orange-200/80 hover:to-pink-200/80 disabled:opacity-50 transition-all transform hover:scale-105 border border-orange-200 backdrop-blur-sm shadow-sm"
+							variant="secondary"
+							className="px-5 py-2 text-sm"
 						>
 							← 前へ
-						</button>
+						</QuantumButton>
 						<span className="text-sm text-slate-600 bg-gradient-to-r from-orange-100/80 to-pink-100/80 px-4 py-2 rounded-2xl border border-orange-200 shadow-sm backdrop-blur-sm">
 							{currentMessageIndex + 1} / {messages.length}
 						</span>
-						<button
-							type="button"
+						<QuantumButton
 							onClick={handleNext}
-							className="px-4 py-2 bg-gradient-to-r from-orange-100/80 to-pink-100/80 text-orange-700 rounded-2xl font-medium hover:from-orange-200/80 hover:to-pink-200/80 transition-all transform hover:scale-105 border border-orange-200 backdrop-blur-sm shadow-sm"
+							variant="secondary"
+							className="px-5 py-2 text-sm"
 						>
 							{currentMessageIndex < messages.length - 1 ? "次へ →" : "閉じる"}
-						</button>
+						</QuantumButton>
 					</div>
 				)}
 
 				{/* アクションボタン */}
 				<div className="flex justify-center">
 					{messages.length === 1 && (
-						<button
-							type="button"
+						<QuantumButton
 							onClick={handleClose}
-							className="px-6 py-3 bg-gradient-to-r from-orange-400 to-pink-500 text-white rounded-2xl font-semibold hover:from-orange-500 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg"
+							variant="primary"
+							className="px-8 py-3"
 						>
 							閉じる
-						</button>
+						</QuantumButton>
 					)}
 				</div>
 			</div>

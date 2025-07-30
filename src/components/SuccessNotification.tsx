@@ -69,7 +69,7 @@ export function SuccessNotification({
 							</svg>
 						</div>
 					</div>
-					
+
 					{/* 成功メッセージ */}
 					<div className="ml-4 flex-1">
 						<p className="text-md font-bold text-green-800">

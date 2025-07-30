@@ -19,7 +19,9 @@ export function MessageList({ messages, currentUserId }: MessageListProps) {
 				<p className="text-xl font-bold text-slate-700 mb-3">
 					まだメッセージがありません
 				</p>
-				<p className="text-slate-500 text-lg">最初の「ありがとう」を送ってみましょう！</p>
+				<p className="text-slate-500 text-lg">
+					最初の「ありがとう」を送ってみましょう！
+				</p>
 			</div>
 		);
 	}
