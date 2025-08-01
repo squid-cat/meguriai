@@ -3,9 +3,11 @@ node_modules/
 
 # Next.js build output
 .next/
+packages/frontend/.next/
 
 # TypeScript
 *.tsbuildinfo
+packages/frontend/*.tsbuildinfo
 
 # Local env files
 .env
@@ -15,4 +17,4 @@ node_modules/
 
 # その他
 *.log 
-/app/generated/prisma
+/packages/frontend/app/generated/prisma
