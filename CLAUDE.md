@@ -60,10 +60,17 @@ pnpm run prisma:reset
 
 ### API開発
 ```bash
-# OpenAPI型定義生成（APIサーバー起動中に実行）
-pnpm --filter web generate:api
+# OpenAPIスキーマ生成（サーバー起動不要）
+pnpm run generate:openapi
 
-# OpenAPI文書確認
+# APIクライアント生成（スキーマ→クライアント）
+pnpm run generate:api-client
+
+# 個別実行
+pnpm --filter api generate:openapi    # OpenAPIスキーマのみ
+pnpm --filter web generate:api        # TypeScript型のみ
+
+# OpenAPI文書確認（サーバー起動時）
 # http://localhost:8000/doc - OpenAPI JSON
 # http://localhost:8000/swagger - Swagger UI
 ```
@@ -90,7 +97,7 @@ packages/
 ## API開発フロー
 
 1. **スキーマ定義**: packages/api/src/routes/ でZodスキーマとOpenAPIルートを定義
-2. **型生成**: `pnpm --filter web generate:api` でTypeScript型を自動生成
+2. **型生成**: `pnpm run generate:api-client` でOpenAPIスキーマ→TypeScript型を自動生成
 3. **フロントエンド**: 生成された型を使用してtype-safeなAPIクライアントを利用
 
 ```typescript
@@ -111,7 +118,7 @@ const { error } = await apiClient.POST("/api/test", { body: { text: "test" } });
 ## ワークフロー
 
 1. **開発前**: `pnpm run check` で型検査とlintを実行
-2. **API変更時**: スキーマ変更 → `pnpm --filter web generate:api` で型更新
+2. **API変更時**: スキーマ変更 → `pnpm run generate:api-client` で型更新
 3. **DB変更時**: `pnpm run prisma:migrate` → `pnpm run prisma:generate`
 4. **コミット前**: `pnpm run fix` で自動修正
 

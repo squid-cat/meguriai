@@ -8,7 +8,7 @@
 		"build": "next build",
 		"start": "next start",
 		"check": "tsc --noEmit",
-		"generate:api": "openapi-typescript http://localhost:8000/doc -o ./utils/api-types.ts"
+		"generate:api": "openapi-typescript ../api/openapi.json -o ./utils/api-types.ts"
 	},
 	"keywords": [],
 	"author": "",

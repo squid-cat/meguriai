@@ -11,6 +11,7 @@
 			"**",
 			"!packages/api/prisma/**",
 			"!packages/api/dist/**",
+			"!packages/api/openapi.json",
 			"!**/node_modules/**",
 			"!**/pnpm-lock.yaml",
 			"!packages/web/public/**",
