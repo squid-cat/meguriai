@@ -6,13 +6,20 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 2.1.2
+        version: 2.1.2
 
-  packages/backend:
+  packages/api:
     dependencies:
       '@hono/node-server':
         specifier: ^1.13.7
         version: 1.18.0(hono@4.8.10)
+      '@prisma/client':
+        specifier: ^6.12.0
+        version: 6.13.0(prisma@6.13.0(typescript@5.9.2))(typescript@5.9.2)
       hono:
         specifier: ^4.8.7
         version: 4.8.10
@@ -20,6 +27,9 @@ importers:
       '@types/node':
         specifier: ^24.1.0
         version: 24.1.0
+      prisma:
+        specifier: ^6.12.0
+        version: 6.13.0(typescript@5.9.2)
       tsx:
         specifier: ^4.19.2
         version: 4.20.3
@@ -29,9 +39,6 @@ importers:
 
   packages/frontend:
     dependencies:
-      hono:
-        specifier: ^4.8.7
-        version: 4.8.10
       next:
         specifier: ^15.4.4
         version: 15.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -42,12 +49,6 @@ importers:
         specifier: ^19.1.0
         version: 19.1.1(react@19.1.1)
     devDependencies:
-      '@biomejs/biome':
-        specifier: 2.1.2
-        version: 2.1.2
-      '@prisma/client':
-        specifier: ^6.12.0
-        version: 6.13.0(prisma@6.13.0(typescript@5.9.2))(typescript@5.9.2)
       '@types/node':
         specifier: ^24.1.0
         version: 24.1.0
@@ -57,9 +58,6 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.6
         version: 19.1.7(@types/react@19.1.9)
-      prisma:
-        specifier: ^6.12.0
-        version: 6.13.0(typescript@5.9.2)
       typescript:
         specifier: ^5.8.3
         version: 5.9.2

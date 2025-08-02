@@ -10,16 +10,19 @@
 		"build:api": "pnpm --filter api build",
 		"start": "pnpm --filter frontend start",
 		"start:api": "pnpm --filter api start",
-		"check": "pnpm --filter frontend check && pnpm --filter api check",
-		"fix": "pnpm --filter frontend fix && pnpm --filter api fix",
-		"prisma:reset": "pnpm --filter frontend prisma:reset",
-		"prisma:migrate": "pnpm --filter frontend prisma:migrate",
-		"prisma:studio": "pnpm --filter frontend prisma:studio",
-		"prisma:format": "pnpm --filter frontend prisma:format",
-		"prisma:generate": "pnpm --filter frontend prisma:generate",
-		"prisma:deploy": "pnpm --filter frontend prisma:deploy"
+		"check": "biome check && pnpm --filter frontend check && pnpm --filter api check",
+		"fix": "biome check --write",
+		"prisma:reset": "pnpm --filter api prisma:reset",
+		"prisma:migrate": "pnpm --filter api prisma:migrate",
+		"prisma:studio": "pnpm --filter api prisma:studio",
+		"prisma:format": "pnpm --filter api prisma:format",
+		"prisma:generate": "pnpm --filter api prisma:generate",
+		"prisma:deploy": "pnpm --filter api prisma:deploy"
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "2.1.2"
+	}
 }
