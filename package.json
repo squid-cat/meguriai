@@ -2,36 +2,27 @@
 	"name": "meguriai",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"private": true,
 	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"check": "biome check && tsc --noEmit",
+		"dev:web": "pnpm --filter web dev",
+		"dev:api": "pnpm --filter api dev",
+		"build:web": "pnpm --filter web build",
+		"build:api": "pnpm --filter api build",
+		"start:web": "pnpm --filter web start",
+		"start:api": "pnpm --filter api start",
+		"check": "biome check && pnpm --filter web check && pnpm --filter api check",
 		"fix": "biome check --write",
-		"prisma:reset": "prisma migrate reset",
-		"prisma:migrate": "prisma migrate dev",
-		"prisma:studio": "prisma studio",
-		"prisma:format": "prisma format",
-		"prisma:generate": "prisma generate",
-		"prisma:deploy": "prisma migrate deploy"
+		"prisma:reset": "pnpm --filter api prisma:reset",
+		"prisma:migrate": "pnpm --filter api prisma:migrate",
+		"prisma:studio": "pnpm --filter api prisma:studio",
+		"prisma:format": "pnpm --filter api prisma:format",
+		"prisma:generate": "pnpm --filter api prisma:generate",
+		"prisma:deploy": "pnpm --filter api prisma:deploy"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"dependencies": {
-		"hono": "^4.8.7",
-		"next": "^15.4.4",
-		"react": "^19.1.0",
-		"react-dom": "^19.1.0"
-	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.2",
-		"@prisma/client": "^6.12.0",
-		"@types/node": "^24.1.0",
-		"@types/react": "^19.1.8",
-		"@types/react-dom": "^19.1.6",
-		"prisma": "^6.12.0",
-		"typescript": "^5.8.3"
+		"@biomejs/biome": "2.1.2"
 	}
 }

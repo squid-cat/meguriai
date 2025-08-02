@@ -9,13 +9,12 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
-			"!prisma/**",
+			"!packages/api/prisma/**",
+			"!packages/api/dist/**",
 			"!**/node_modules/**",
 			"!**/pnpm-lock.yaml",
-			"!public/**",
-			"!api/graphql/shmob/schema/**",
-			"!.next/**",
-			"!src/helpers/$path/$path.ts",
+			"!packages/web/public/**",
+			"!packages/web/.next/**",
 			"!coverage/**"
 		]
 	},

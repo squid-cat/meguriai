@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { client } from "@/utils/api-client";
+import { apiClient } from "@/utils/api-client";
 
 export default function TestPage() {
 	const [text, setText] = useState("");
@@ -12,8 +12,8 @@ export default function TestPage() {
 	const [loading, setLoading] = useState(false);
 
 	const getPosts = useCallback(async () => {
-		const res = await client.test.$get();
-		const posts = (await res.json()).tests;
+		const data = await apiClient.test.get();
+		const posts = data.tests;
 		setPosts(posts);
 	}, []);
 
@@ -26,9 +26,8 @@ export default function TestPage() {
 		setLoading(true);
 
 		try {
-			const res = await client.test.$post({ json: { text } });
+			await apiClient.test.post({ text });
 
-			await res.json();
 			setText(""); // 送信後にフォームをクリア
 			getPosts();
 		} catch (error) {
