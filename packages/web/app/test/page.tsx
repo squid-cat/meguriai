@@ -12,9 +12,12 @@ export default function TestPage() {
 	const [loading, setLoading] = useState(false);
 
 	const getPosts = useCallback(async () => {
-		const data = await apiClient.test.get();
-		const posts = data.tests;
-		setPosts(posts);
+		const { data, error } = await apiClient.GET("/api/test");
+		if (error) {
+			console.error("Error fetching posts:", error);
+			return;
+		}
+		setPosts(data.tests);
 	}, []);
 
 	useEffect(() => {
@@ -26,7 +29,13 @@ export default function TestPage() {
 		setLoading(true);
 
 		try {
-			await apiClient.test.post({ text });
+			const { error } = await apiClient.POST("/api/test", {
+				body: { text },
+			});
+
+			if (error) {
+				throw new Error("API Error");
+			}
 
 			setText(""); // 送信後にフォームをクリア
 			getPosts();

@@ -4,7 +4,11 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
 	try {
-		const data = await apiClient.hello.get();
+		const { data, error } = await apiClient.GET("/api/hello");
+
+		if (error) {
+			throw new Error("API Error");
+		}
 
 		return <h1>{data.message}</h1>;
 	} catch (error) {
