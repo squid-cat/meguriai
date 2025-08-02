@@ -15,6 +15,7 @@
 			"!**/pnpm-lock.yaml",
 			"!packages/web/public/**",
 			"!packages/web/.next/**",
+			"!packages/web/utils/api-types.ts",
 			"!coverage/**"
 		]
 	},
