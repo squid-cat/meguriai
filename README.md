@@ -1,52 +1,98 @@
-## 起動方法
-以下の順にコマンドを実行してください。
+# Meguriai
 
-1. .env.example から .env を作成
+Next.js + Hono + Prisma を使用したモノレポ構成のWebアプリケーション
+
+## アーキテクチャ
+
+- **packages/frontend**: Next.js (React 19) フロントエンド
+- **packages/api**: Hono + Prisma バックエンドAPIサーバー
+- **pnpm workspaces**: モノレポ管理
+- **PostgreSQL**: データベース
+
+## 起動方法
+
+### 1. 環境変数の設定
 ```bash
-cp .env.example .env
+# API用の環境変数
+cp packages/api/.env.example packages/api/.env
+
+# フロントエンド用の環境変数  
+cp packages/frontend/.env.example packages/frontend/.env
 ```
 
-2. Docker で postgres の起動
+### 2. PostgreSQLの起動
 ```bash
 docker compose up -d
 ```
 
-3. ライブラリのインストール
+### 3. 依存関係のインストール
 ```bash
-pnpm i
+pnpm install
 ```
 
-4. DB テーブルの作成とスキーマ更新 - prisma/migrations にある SQL が順次実行されます
+### 4. データベースのセットアップ
 ```bash
+# マイグレーション実行 + Prisma Client生成
 pnpm run prisma:migrate && pnpm run prisma:generate
 ```
 
-5. 起動
+### 5. アプリケーションの起動
+
+#### 両方同時に起動
 ```bash
+# フロントエンド (http://localhost:3000)
 pnpm run dev
+
+# APIサーバー (http://localhost:8000)  
+pnpm run dev:api
 ```
 
-
-## テーブルの更新方法
-
-1. **スキーマを編集**
-  prisma/schema.prisma を編集
-
-2. **マイグレーションを生成・適用**
-   ```bash
-   pnpm run prisma:migrate
-   ```
-
-3. **Prisma Client を再生成**
-   ```bash
-   pnpm run prisma:generate
-   ```
-
-### よく使うコマンド
-
+#### 個別に起動
 ```bash
-# データベースの状態や中身を Web 上から確認
+# フロントエンドのみ
+pnpm --filter frontend dev
+
+# APIサーバーのみ
+pnpm --filter api dev
+```
+
+## 利用可能なコマンド
+
+### 開発・ビルド
+```bash
+# 開発環境
+pnpm run dev          # フロントエンド
+pnpm run dev:api      # APIサーバー
+
+# ビルド
+pnpm run build        # フロントエンド
+pnpm run build:api    # APIサーバー
+
+# 本番起動
+pnpm run start        # フロントエンド
+pnpm run start:api    # APIサーバー
+```
+
+### コード品質チェック
+```bash
+# 型チェック + Lintチェック
+pnpm run check
+
+# コードフォーマット
+pnpm run fix
+```
+
+### データベース管理
+```bash
+# マイグレーション作成・実行
+pnpm run prisma:migrate
+
+# Prisma Client再生成
+pnpm run prisma:generate
+
+# データベース管理画面
 pnpm run prisma:studio
 
-# 開発環境でデータベースをリセット
+# データベースリセット
 pnpm run prisma:reset
+```
