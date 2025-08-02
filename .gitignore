@@ -5,6 +5,9 @@ node_modules/
 .next/
 packages/frontend/.next/
 
+# Hono build output
+packages/api/dist
+
 # TypeScript
 *.tsbuildinfo
 packages/frontend/*.tsbuildinfo
