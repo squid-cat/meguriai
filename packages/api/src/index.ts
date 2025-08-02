@@ -1,11 +1,12 @@
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
+import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import hello from "./routes/hello";
 import test from "./routes/test";
 
-const app = new Hono();
+const app = new OpenAPIHono();
 
 app.use("*", logger());
 app.use("*", cors());
@@ -19,10 +20,22 @@ app.get("/health", (c) => {
 });
 
 // API routes
-const apiRoutes = app
-	.basePath("/api")
-	.route("/hello", hello)
-	.route("/test", test);
+app.route("/api/hello", hello);
+app.route("/api/test", test);
+
+// OpenAPI documentation
+app.doc("/doc", {
+	openapi: "3.0.0",
+	info: {
+		title: "Meguriai API",
+		version: "1.0.0",
+		description: "Meguriai API Server",
+	},
+});
+
+app.get("/swagger", swaggerUI({ url: "/doc" }));
+
+const apiRoutes = app.basePath("/api");
 
 export type AppType = typeof apiRoutes;
 
