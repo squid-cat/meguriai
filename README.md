@@ -4,7 +4,7 @@ Next.js + Hono + Prisma を使用したモノレポ構成のWebアプリケー�
 
 ## アーキテクチャ
 
-- **packages/frontend**: Next.js (React 19) フロントエンド
+- **packages/web**: Next.js (React 19) フロントエンド
 - **packages/api**: Hono + Prisma バックエンドAPIサーバー
 - **pnpm workspaces**: モノレポ管理
 - **PostgreSQL**: データベース
@@ -17,7 +17,7 @@ Next.js + Hono + Prisma を使用したモノレポ構成のWebアプリケー�
 cp packages/api/.env.example packages/api/.env
 
 # フロントエンド用の環境変数  
-cp packages/frontend/.env.example packages/frontend/.env
+cp packages/web/.env.example packages/web/.env
 ```
 
 ### 2. PostgreSQLの起動
@@ -41,7 +41,7 @@ pnpm run prisma:migrate && pnpm run prisma:generate
 #### 両方同時に起動
 ```bash
 # フロントエンド (http://localhost:3000)
-pnpm run dev
+pnpm run dev:web
 
 # APIサーバー (http://localhost:8000)  
 pnpm run dev:api
@@ -50,7 +50,7 @@ pnpm run dev:api
 #### 個別に起動
 ```bash
 # フロントエンドのみ
-pnpm --filter frontend dev
+pnpm --filter web dev
 
 # APIサーバーのみ
 pnpm --filter api dev
@@ -61,15 +61,15 @@ pnpm --filter api dev
 ### 開発・ビルド
 ```bash
 # 開発環境
-pnpm run dev          # フロントエンド
+pnpm run dev:web      # フロントエンド
 pnpm run dev:api      # APIサーバー
 
 # ビルド
-pnpm run build        # フロントエンド
+pnpm run build:web    # フロントエンド
 pnpm run build:api    # APIサーバー
 
 # 本番起動
-pnpm run start        # フロントエンド
+pnpm run start:web    # フロントエンド
 pnpm run start:api    # APIサーバー
 ```
 

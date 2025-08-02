@@ -2,15 +2,13 @@
 node_modules/
 
 # Next.js build output
-.next/
-packages/frontend/.next/
+packages/web/.next/
 
 # Hono build output
 packages/api/dist
 
 # TypeScript
-*.tsbuildinfo
-packages/frontend/*.tsbuildinfo
+packages/web/*.tsbuildinfo
 
 # Local env files
 .env
@@ -20,4 +18,3 @@ packages/frontend/*.tsbuildinfo
 
 # その他
 *.log 
-/packages/frontend/app/generated/prisma

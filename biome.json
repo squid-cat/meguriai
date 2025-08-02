@@ -13,8 +13,8 @@
 			"!packages/api/dist/**",
 			"!**/node_modules/**",
 			"!**/pnpm-lock.yaml",
-			"!packages/frontend/public/**",
-			"!packages/frontend/.next/**",
+			"!packages/web/public/**",
+			"!packages/web/.next/**",
 			"!coverage/**"
 		]
 	},
