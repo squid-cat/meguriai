@@ -1,22 +1,21 @@
-# kairo-requirements
+# 要件定義書の作成
 
 ## 目的
-
-ユーザから提供された要件の概要を分析し、EARS（Easy Approach to Requirements Syntax）記法を使用して詳細な受け入れ基準を含む要件定義書を作成する。
+サービス設計書に基づいて、EARS（Easy Approach to Requirements Syntax）記法を使用して詳細な受け入れ基準を含む要件定義書を作成する。
 
 ## 前提条件
-
-- ユーザから要件の概要が提供されている
-- `packages/documents/docs/` ディレクトリが存在する（なければ作成）
+- `packages/web/` 配下にフロントエンド実装が存在する
+- `packages/documents/docs/service-design.md`（サービス設計書）が存在する
 
 ## 実行内容
 
 1. **既存実装の調査**
    - `packages/web/` 配下のフロントエンド実装を調査し、既存のUIデザインパターンとユーザー操作フローを把握する
    - `packages/documents/docs/` 配下の既存資料を参照し、プロジェクトの背景情報を理解する
+   - `packages/documents/docs/service-design.md`（サービス設計書）を参照し、プロジェクトの背景情報を理解する
 
 2. **要件の分析**
-   - ユーザから提供された要件の概要を理解する
+   - サービス設計書からビジネス要件を理解する
    - 既存のUIデザインパターンとの整合性を考慮する
    - 関連するドメイン知識を適用する
    - 不明確な点がある場合は、既存のUIデザインパターンや一般的なベストプラクティスに基づいて補完する
