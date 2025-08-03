@@ -1,7 +1,7 @@
 # kairo-design
 
 ## 目的
-承認された要件定義書に基づいて、技術設計文書を生成する。データフロー図、TypeScriptインターフェース、データベーススキーマ、APIエンドポイントを含む包括的な設計を行う。
+要件定義書に基づいて、OOUI設計書と機能設計書を作成し、システム全体のアーキテクチャとデータフローを設計する。
 
 ## 前提条件
 - `docs/spec/` に要件定義書が存在する
@@ -9,51 +9,126 @@
 
 ## 実行内容
 
+### フェーズ1: OOUI設計・機能設計
+
 1. **要件の分析**
    - 要件定義書を読み込む
    - 機能要件と非機能要件を整理する
    - システムの境界を明確にする
 
-2. **アーキテクチャ設計**
+2. **OOUI設計書の作成**
+   - **画面構成**：アプリケーションに必要な画面の一覧と各画面の役割
+   - **オブジェクトの定義**：各画面に存在するオブジェクト（ユーザー、商品、注文など）の識別
+   - **データ構造**：各オブジェクトが持つ属性（プロパティ）の詳細定義（論理名・日本語）
+   - **オブジェクト間の関係**：オブジェクト同士の関連性（1対多、多対多など）
+   - **ページネーションの要否**：一覧表示でページネーションが必要かどうかの判定
+
+3. **機能設計書の作成**
+   - **認証・認可の要否判定**：認証が必要かどうかを判断
+   - **認証・認可設計**（必要な場合）：認証方式、フロー、権限管理
+   - **ファイルアップロード設計**（該当する場合）：アップロードフロー、保存先、制限事項
+   - **Firestore設計**（使用する場合）：コレクション構造、セキュリティルール、処理分担
+   - **フロントエンド/バックエンド分担**：各機能の処理分担、状態管理、キャッシュ戦略
+
+### フェーズ2: 技術設計
+
+4. **アーキテクチャ設計**
    - システム全体のアーキテクチャを決定
    - フロントエンド/バックエンドの分離
    - マイクロサービスの必要性を検討
 
-3. **データフロー図の作成**
+5. **データフロー図の作成**
    - Mermaid記法でデータフローを可視化
    - ユーザーインタラクションの流れ
    - システム間のデータの流れ
 
-4. **TypeScriptインターフェースの定義**
-   - エンティティの型定義
-   - APIリクエスト/レスポンスの型定義
-   - 共通型の定義
+## 成果物
 
-5. **データベーススキーマの設計**
-   - テーブル定義
-   - リレーションシップ
-   - インデックス戦略
-   - 正規化レベルの決定
+### フェーズ1の成果物
+- `docs/design/ooui-design.md` - OOUI設計書
+- `docs/design/feature-design.md` - 機能設計書
 
-6. **APIエンドポイントの設計**
-   - RESTful API設計
-   - エンドポイントの命名規則
-   - HTTPメソッドの適切な使用
-   - リクエスト/レスポンスの構造
-
-7. **ファイルの作成**
-   - `docs/design/{要件名}/` ディレクトリに以下を作成：
-     - `architecture.md` - アーキテクチャ概要
-     - `dataflow.md` - データフロー図
-     - `interfaces.ts` - TypeScript型定義
-     - `database-schema.sql` - DBスキーマ
-     - `api-endpoints.md` - API仕様
+### フェーズ2の成果物
+- `docs/design/` ディレクトリに以下を作成：
+  - `architecture.md` - アーキテクチャ概要
+  - `dataflow.md` - データフロー図
 
 ## 出力フォーマット例
 
+### OOUI設計書 (ooui-design.md)
+```markdown
+# OOUI設計書
+
+## 画面構成
+### 画面一覧
+1. トップページ
+   - 役割: ...
+   - 主要オブジェクト: ...
+
+2. 一覧画面
+   - 役割: ...
+   - 主要オブジェクト: ...
+   - ページネーション: 要
+
+## オブジェクト定義
+### ユーザー
+- ID
+- 名前
+- メールアドレス
+- 登録日時
+
+### 商品
+- ID
+- 商品名
+- 価格
+- 在庫数
+
+## オブジェクト関係
+- ユーザー : 注文 = 1 : 多
+- 注文 : 商品 = 多 : 多
+```
+
+### 機能設計書 (feature-design.md)
+```markdown
+# 機能設計書
+
+## 認証・認可
+### 認証の要否
+- 要否: 必要
+- 理由: ユーザー固有のデータを扱うため
+
+### 認証方式
+- 方式: JWT
+- 有効期限: 24時間
+- リフレッシュトークン: あり
+
+## ファイルアップロード
+### 対象機能
+- プロフィール画像アップロード
+- 商品画像アップロード
+
+### 実装方式
+- プリサインドURL方式
+- 保存先: AWS S3
+- 最大サイズ: 5MB
+- 許可形式: JPG, PNG
+
+## フロントエンド/バックエンド分担
+### フロントエンド責務
+- UI表示・制御
+- バリデーション（基本）
+- 状態管理
+
+### バックエンド責務
+- ビジネスロジック
+- データベースアクセス
+- 認証・認可
+- バリデーション（詳細）
+```
+
 ### architecture.md
 ```markdown
-# {要件名} アーキテクチャ設計
+# アーキテクチャ設計
 
 ## システム概要
 {システムの概要説明}
@@ -64,15 +139,16 @@
 
 ## コンポーネント構成
 ### フロントエンド
-- フレームワーク: {使用フレームワーク}
+- フレームワーク: Next.js
 - 状態管理: {状態管理方法}
 
 ### バックエンド
-- フレームワーク: {使用フレームワーク}
+- フレームワーク: Hono
 - 認証方式: {認証方法}
 
 ### データベース
-- DBMS: {使用するDBMS}
+- DBMS: PostgreSQL
+- ORM: Prisma
 - キャッシュ: {キャッシュ戦略}
 ```
 
@@ -104,81 +180,6 @@ sequenceDiagram
     B-->>F: レスポンス
     F-->>U: 画面更新
 \`\`\`
-```
-
-### interfaces.ts
-```typescript
-// エンティティ定義
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// APIリクエスト/レスポンス
-export interface CreateUserRequest {
-  email: string;
-  name: string;
-  password: string;
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: {
-    code: string;
-    message: string;
-  };
-}
-```
-
-### database-schema.sql
-```sql
--- ユーザーテーブル
-CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- インデックス
-CREATE INDEX idx_users_email ON users(email);
-```
-
-### api-endpoints.md
-```markdown
-# API エンドポイント仕様
-
-## 認証
-### POST /auth/login
-リクエスト:
-\`\`\`json
-{
-  "email": "user@example.com",
-  "password": "password"
-}
-\`\`\`
-
-レスポンス:
-\`\`\`json
-{
-  "success": true,
-  "data": {
-    "token": "jwt-token",
-    "user": { ... }
-  }
-}
-\`\`\`
-
-## ユーザー管理
-### GET /users/:id
-### POST /users
-### PUT /users/:id
-### DELETE /users/:id
 ```
 
 ## 実行後の確認
