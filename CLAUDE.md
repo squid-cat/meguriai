@@ -122,6 +122,9 @@ const { error } = await apiClient.POST("/api/test", { body: { text: "test" } });
 3. **DB変更時**: `pnpm run prisma:migrate` → `pnpm run prisma:generate`
 4. **コミット前**: `pnpm run fix` で自動修正
 
+## ドキュメント管理
+- **ドキュメント格納先**: `/kairo-requirements`および`/kairo-design`で生成されるドキュメントは、packages/documents/docs配下に格納する
+
 ## 重要事項
 
 - **ユーザーとのコミュニケーションは常に日本語で行うこと**
