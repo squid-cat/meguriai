@@ -5,6 +5,8 @@ import { logger } from "hono/logger";
 import { OPENAPI_CONFIG } from "./config";
 import hello from "./routes/hello";
 import test from "./routes/test";
+import webhook from "./routes/webhook";
+import claude from "./routes/claude";
 
 export function createApp() {
 	const app = new OpenAPIHono();
@@ -23,6 +25,8 @@ export function createApp() {
 	// API routes
 	app.route("/api/hello", hello);
 	app.route("/api/test", test);
+	app.route("/api/webhook", webhook);
+	app.route("/api/claude", claude);
 
 	// OpenAPI documentation
 	app.doc("/doc", OPENAPI_CONFIG);
