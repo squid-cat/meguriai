@@ -124,6 +124,10 @@ const { error } = await apiClient.POST("/api/test", { body: { text: "test" } });
 
 ## ドキュメント管理
 - **ドキュメント格納先**: `/kairo-requirements`および`/kairo-design`で生成されるドキュメントは、packages/documents/docs配下に格納する
+- **記述ルール**: packages/documents配下のMarkdownドキュメント作成時は以下のルールに従う
+  - **波括弧禁止**: 通常のテキスト内では波括弧 `{}` を使用しない（コードブロック内は除く）
+  - **API記述**: APIパスパラメータは `{id}` ではなく `:id` の形式で記述する
+  - **例**: `GET /api/users/:id` （正） vs `GET /api/users/{id}` （誤）
 
 ## 重要事項
 
