@@ -81,7 +81,7 @@ const config: Config = {
       title: 'めぐりあい',
       logo: {
         alt: 'めぐりあい',
-        src: 'img/logo.svg', // TODO: ロゴ画像を追加
+        src: 'img/logo.png',
       },
       items: [
         {
