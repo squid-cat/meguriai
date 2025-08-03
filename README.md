@@ -47,6 +47,12 @@ pnpm run dev:web
 pnpm run dev:api
 ```
 
+#### docusaurusの起動
+```bash
+t_katagiri meguriai (main) >> cd packages/documents
+t_katagiri documents (main) >> pnpm start
+```
+
 #### 個別に起動
 ```bash
 # フロントエンドのみ
