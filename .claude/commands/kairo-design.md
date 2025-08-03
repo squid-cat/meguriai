@@ -6,8 +6,8 @@
 ## 前提条件
 - `packages/web/` 配下にフロントエンド実装が存在する
 - `packages/documents/docs/service-design.md`（サービス設計書）が存在する
-- `packages/documents/docs/api_development_guideline.md`（APIガイドライン）が存在する
-- `packages/documents/docs/architecture_guideline.md`（アーキテクチャガイドライン）が存在する
+- `docs/api_development_guideline.md`（APIガイドライン）が存在する
+- `docs/architecture_guideline.md`（アーキテクチャガイドライン）が存在する
 - `packages/documents/docs/` ディレクトリが存在する（なければ作成）
 
 ## 実行内容
@@ -17,8 +17,8 @@
 1. **既存実装とドキュメントの調査**
    - `packages/web/` 配下のフロントエンド実装を調査し、既存のUIデザインパターンとコンポーネント構成を把握する
    - `packages/documents/docs/service-design.md`（サービス設計書）を参照し、プロジェクトの背景情報を理解する
-   - `packages/documents/docs/api_development_guideline.md`（APIガイドライン）を参照し、DB設計の方針を理解する
-   - `packages/documents/docs/architecture_guideline.md`（アーキテクチャガイドライン）を参照し、アーキテクチャ設計の方針を理解する
+   - `docs/api_development_guideline.md`（APIガイドライン）を参照し、DB設計の方針を理解する
+   - `docs/architecture_guideline.md`（アーキテクチャガイドライン）を参照し、アーキテクチャ設計の方針を理解する
 
 2. **デザインとサービス設計の分析**
    - フロントエンドデザインから必要な機能を推定する
@@ -68,12 +68,12 @@
 ## 成果物
 
 ### フェーズ1の成果物
-- `packages/documents/docs/設計書/feature-design.md` - 機能設計書
-- `packages/documents/docs/設計書/db-design.md` - DB設計書
-- `packages/documents/docs/api-design.md` - API設計書
+- `packages/documents/docs/designs/feature-design.md` - 機能設計書
+- `packages/documents/docs/designs/db-design.md` - DB設計書
+- `packages/documents/docs/designs/api-design.md` - API設計書
 
 ### フェーズ2の成果物
-- `packages/documents/docs/設計書/` ディレクトリに以下を作成：
+- `packages/documents/docs/designs/` ディレクトリに以下を作成：
   - `architecture.md` - アーキテクチャ概要
   - `dataflow.md` - データフロー図
 

@@ -8,8 +8,8 @@ description: APIの実装を行います
 
 ## 参照する設計書
 
-- 機能設計書: `packages/documents/docs/feature-design.md`
-- API設計書: `packages/documents/docs/api-design.md`
+- 機能設計書: `packages/documents/docs/designs/feature-design.md`
+- API設計書: `packages/documents/docs/designs/api-design.md`
 - OpenAPI仕様書: `packages/api/openapi.json`
 - 既存のスタブ実装: `packages/api/src/routes/[機能名]/`
 
@@ -22,12 +22,12 @@ description: APIの実装を行います
 ### 1. 設計書の確認と実装計画
 
 - **機能設計書の確認**
-  - `packages/documents/docs/feature-design.md` から対象機能の要件を確認
+  - `packages/documents/docs/designs/feature-design.md` から対象機能の要件を確認
   - フロントエンド/バックエンド分担、ビジネスルール、セキュリティ要件を把握
   - パフォーマンス要件と制約事項の確認
 
 - **API設計書とOpenAPI仕様の確認**
-  - `packages/documents/docs/api-design.md` と `packages/api/openapi.json` の内容を比較
+  - `packages/documents/docs/designs/api-design.md` と `packages/api/openapi.json` の内容を比較
   - 矛盾がある場合は `openapi.json` を正として実装方針を決定
   - エンドポイント、リクエスト/レスポンス形式、エラーハンドリングの確認
 
