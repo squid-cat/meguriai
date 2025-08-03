@@ -314,8 +314,8 @@ Authorization: Bearer {token}
 erDiagram
     USERS {
         uuid id PK
-        varchar email UK
-        varchar name
+        text email UK
+        text name
         timestamp created_at
         timestamp updated_at
     }
@@ -323,7 +323,7 @@ erDiagram
     POSTS {
         uuid id PK
         uuid user_id FK
-        varchar title
+        text title
         text content
         timestamp created_at
         timestamp updated_at

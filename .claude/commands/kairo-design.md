@@ -35,6 +35,7 @@
 
 4. **DB設計書の作成**
    - **テーブル設計**：必要なテーブルの洗い出しと構造定義
+   - **データ型指針**：文字列カラムは基本的にTEXT型を使用（VARCHAR制限を避ける）
    - **ER図**：Mermaid記法によるテーブル間の関係図
    - **インデックス設計**：パフォーマンスを考慮したインデックス設計
    - **マイグレーション計画**：テーブル作成順序とマイグレーション戦略
@@ -247,6 +248,7 @@
 - ORM: Prisma
 - 設計方針: docs/api_development_guideline.md に準拠
 - アーキテクチャ方針: docs/architecture_guideline.md に準拠
+- データ型方針: 文字列カラムは基本的にTEXT型を使用（PostgreSQLではVARCHARとTEXTのパフォーマンス差はない）
 
 ## テーブル設計
 
@@ -254,8 +256,8 @@
 | カラム名 | 型 | 制約 | 説明 |
 |---------|---|------|------|
 | id | UUID | PRIMARY KEY | ユーザーID |
-| email | VARCHAR(255) | UNIQUE NOT NULL | メールアドレス |
-| name | VARCHAR(100) | NOT NULL | 氏名 |
+| email | TEXT | UNIQUE NOT NULL | メールアドレス |
+| name | TEXT | NOT NULL | 氏名 |
 | created_at | TIMESTAMP | NOT NULL DEFAULT NOW() | 作成日時 |
 | updated_at | TIMESTAMP | NOT NULL DEFAULT NOW() | 更新日時 |
 
@@ -264,9 +266,9 @@
 |---------|---|------|------|
 | id | UUID | PRIMARY KEY | プロジェクトID |
 | user_id | UUID | FOREIGN KEY NOT NULL | ユーザーID |
-| title | VARCHAR(200) | NOT NULL | プロジェクト名 |
+| title | TEXT | NOT NULL | プロジェクト名 |
 | description | TEXT | | 説明 |
-| status | VARCHAR(50) | NOT NULL | ステータス |
+| status | TEXT | NOT NULL | ステータス |
 | created_at | TIMESTAMP | NOT NULL DEFAULT NOW() | 作成日時 |
 | updated_at | TIMESTAMP | NOT NULL DEFAULT NOW() | 更新日時 |
 
@@ -278,8 +280,8 @@ erDiagram
     
     users {
         UUID id PK
-        VARCHAR email UK
-        VARCHAR name
+        TEXT email UK
+        TEXT name
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
@@ -287,9 +289,9 @@ erDiagram
     projects {
         UUID id PK
         UUID user_id FK
-        VARCHAR title
+        TEXT title
         TEXT description
-        VARCHAR status
+        TEXT status
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
