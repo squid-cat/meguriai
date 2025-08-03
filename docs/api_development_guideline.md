@@ -277,8 +277,8 @@ INSERT INTO system_settings (key, value, description, created_at, updated_at) VA
 
 ##### マイグレーション適用
 ```bash
-# 編集後、マイグレーションを適用
-npx prisma migrate dev
+# 編集後、マイグレーションを適用（--nameでマイグレーション名を指定）
+npx prisma migrate dev --name update_master_data
 ```
 
 ##### マスタデータ更新の手順
@@ -300,6 +300,7 @@ npx prisma migrate dev --create-only --name update_categories_master
 
 ##### 8. 注意事項
 - **開発環境**: `prisma migrate dev`を使用（データ損失の可能性あり）
+- **マイグレーション名**: `prisma migrate dev`実行時は必ず`--name`オプションでマイグレーション名を指定する
 - **スキーマ変更**: 必ずマイグレーションを経由してデータベースを更新
 - **チーム開発**: マイグレーションファイルは必ずGitにコミット
 - **マスタデータ**: 初期データや固定データもマイグレーションで管理
