@@ -40,6 +40,13 @@
    - **マイグレーション計画**：テーブル作成順序とマイグレーション戦略
    - **APIガイドライン準拠**：`docs/api_development_guideline.md`の規約に基づく設計
 
+5. **API設計書の作成**
+   - **エンドポイント設計**：各機能に必要なAPIエンドポイントの定義
+   - **リクエスト/レスポンス設計**：各エンドポイントの入出力形式
+   - **認証・認可**：API レベルでの認証・認可要件
+   - **エラーハンドリング**：統一的なエラーレスポンス形式
+   - **OpenAPI仕様書生成**：設計内容をもとにOpenAPI仕様書を作成
+
 ### フェーズ2: 技術設計
 
 1. **アーキテクチャ設計**
@@ -53,14 +60,20 @@
    - ユーザーインタラクションの流れ
    - システム間のデータの流れ
 
+3. **APIクライアント生成**
+   - OpenAPI仕様書が完成したら `pnpm run generate:api-client` を実行
+   - フロントエンド用のTypeScript型定義とAPIクライアントを自動生成
+   - 生成されたクライアントの確認と動作テスト
+
 ## 成果物
 
 ### フェーズ1の成果物
-- `packages/documents/docs/design/feature-design.md` - 機能設計書
-- `packages/documents/docs/design/db-design.md` - DB設計書
+- `packages/documents/docs/設計書/feature-design.md` - 機能設計書
+- `packages/documents/docs/設計書/db-design.md` - DB設計書
+- `packages/documents/docs/api-design.md` - API設計書
 
 ### フェーズ2の成果物
-- `packages/documents/docs/design/` ディレクトリに以下を作成：
+- `packages/documents/docs/設計書/` ディレクトリに以下を作成：
   - `architecture.md` - アーキテクチャ概要
   - `dataflow.md` - データフロー図
 
@@ -145,6 +158,84 @@
 ### フロントエンド/バックエンド分担
 - **フロントエンド**: ファイル選択UI、プログレス表示、プレビュー機能
 - **バックエンド**: URL生成、ファイル検証、メタデータ管理
+```
+
+### API設計書 (api-design.md)
+```markdown
+# API設計書
+
+## 概要
+- 設計方針: 機能設計書に基づくRESTful API設計
+- OpenAPI準拠: OpenAPI 3.0仕様に基づく設計
+- 認証方式: JWT Bearer Token
+
+## ユーザー認証API
+
+### POST /api/auth/login
+- **概要**: ユーザーログイン
+- **リクエスト**:
+  - email: string (required) - メールアドレス
+  - password: string (required) - パスワード
+- **レスポンス**:
+  - token: string - JWT認証トークン
+  - user: object - ユーザー情報（id, email, name）
+
+### POST /api/auth/logout
+- **概要**: ユーザーログアウト
+- **認証**: 必要（Bearer Token）
+- **レスポンス**: 204 No Content
+
+## 案件管理API
+
+### GET /api/projects
+- **概要**: 案件一覧取得
+- **認証**: 必要
+- **クエリパラメータ**:
+  - status: string (optional) - ステータスフィルタ
+  - page: number (optional) - ページ番号
+  - limit: number (optional) - 取得件数
+- **レスポンス**:
+  - projects: array - 案件リスト
+  - pagination: object - ページネーション情報
+
+### POST /api/projects
+- **概要**: 案件作成
+- **認証**: 必要
+- **リクエスト**:
+  - title: string (required) - 案件名
+  - description: string (optional) - 案件説明
+  - client: string (required) - クライアント名
+  - deadline: string (optional) - 納期（ISO 8601形式）
+
+### PUT /api/projects/{id}
+- **概要**: 案件更新
+- **認証**: 必要
+- **パスパラメータ**: id（案件ID）
+- **リクエスト**: 案件作成と同じフィールド
+
+### DELETE /api/projects/{id}
+- **概要**: 案件削除
+- **認証**: 必要
+- **パスパラメータ**: id（案件ID）
+- **レスポンス**: 204 No Content
+
+## エラーハンドリング
+
+### 共通エラーレスポンス形式
+- error: object
+  - code: string - エラーコード
+  - message: string - エラーメッセージ
+  - details: array (optional) - 詳細エラー情報
+
+### HTTPステータスコード
+- 200: 成功
+- 201: 作成成功
+- 204: 成功（レスポンスボディなし）
+- 400: リクエストエラー
+- 401: 認証エラー
+- 403: 認可エラー
+- 404: リソースが見つからない
+- 500: サーバーエラー
 ```
 
 ### DB設計書 (db-design.md)
