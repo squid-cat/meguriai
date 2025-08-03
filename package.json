@@ -15,6 +15,8 @@
 		"start:docs": "pnpm --filter documents serve",
 		"check": "biome check && pnpm --filter web check && pnpm --filter api check",
 		"fix": "biome check --write",
+		"generate:openapi": "pnpm --filter api generate:openapi",
+		"generate:api-client": "pnpm run generate:openapi && pnpm --filter web generate:api",
 		"prisma:reset": "pnpm --filter api prisma:reset",
 		"prisma:migrate": "pnpm --filter api prisma:migrate",
 		"prisma:studio": "pnpm --filter api prisma:studio",
