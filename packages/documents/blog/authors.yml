@@ -1,25 +1,31 @@
-yangshun:
-  name: Yangshun Tay
-  title: Ex-Meta Staff Engineer, Co-founder GreatFrontEnd
-  url: https://linkedin.com/in/yangshun
-  image_url: https://github.com/yangshun.png
+みさわ:
+  name: Naoya Misawa
+  title: Product Manager
+  image_url: https://github.com/3isawa.png
   page: true
   socials:
-    x: yangshunz
-    linkedin: yangshun
-    github: yangshun
-    newsletter: https://www.greatfrontend.com
+    github: 3isawa
 
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
-  page:
-    # customize the url of the author page at /blog/authors/<permalink>
-    permalink: '/all-sebastien-lorber-articles'
+たいせい:
+  name: Taisei Katagiri
+  title: Frontend Engineer
+  image_url: https://github.com/Taisei-rgb.png
+  page: true
   socials:
-    x: sebastienlorber
-    linkedin: sebastienlorber
-    github: slorber
-    newsletter: https://thisweekinreact.com
+    github: Taisei-rgb
+
+いかのこ:
+  name: Kai Imasato
+  title: Frontend Engineer
+  image_url: https://github.com/squid-cat.png
+  page: true
+  socials:
+    github: squid-cat
+
+いっちー:
+  name: Tomoaki Ichige
+  title: Backend Engineer
+  image_url: https://github.com/tomoakiichige.png
+  page: true
+  socials:
+    github: tomoakiichige
