@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # 私たちのプロダクト開発
 
 ## 📄 DocDD（Document Driven Development）
