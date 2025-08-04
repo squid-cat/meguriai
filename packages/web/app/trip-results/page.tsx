@@ -1,7 +1,5 @@
 "use client"
 
-import { Calendar } from "@/components/ui/calendar"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -61,6 +59,7 @@ export default function TripResultsPage() {
 
   const [itinerary] = useState([
     {
+      date: "2025/08/01",
       day: 1,
       title: "到着・現地の暮らしに触れる",
       activities: [
@@ -71,6 +70,7 @@ export default function TripResultsPage() {
       ],
     },
     {
+      date: "2025/08/02",
       day: 2,
       title: "秘境への冒険",
       activities: [
@@ -221,8 +221,7 @@ export default function TripResultsPage() {
               <Card key={day.day} className="border-orange-200">
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Calendar className="h-5 w-5 mr-2 text-orange-600" />
-                    Day {day.day}: {day.title}
+                    {day.date} - {day.day}日目: {day.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
