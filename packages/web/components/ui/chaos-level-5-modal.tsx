@@ -1,6 +1,6 @@
 "use client";
 
-import { Crown, X, Zap } from "lucide-react";
+import { Crown, Zap } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,23 +52,10 @@ export function ChaosLevel5Modal({
 		>
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
-					<div className="flex items-center justify-between">
-						<DialogTitle className="flex items-center text-xl font-bold">
-							<Crown className="h-6 w-6 text-orange-600 mr-2" />
-							カオス度5をアンロック
-						</DialogTitle>
-						<Button
-							variant="ghost"
-							size="sm"
-							onClick={() => {
-								handleModalEvent('close_button');
-								onClose();
-							}}
-							className="h-8 w-8 p-0"
-						>
-							<X className="h-4 w-4" />
-						</Button>
-					</div>
+					<DialogTitle className="flex items-center text-xl font-bold">
+						<Crown className="h-6 w-6 text-orange-600 mr-2" />
+						カオス度5をアンロック
+					</DialogTitle>
 					<DialogDescription className="text-base">
 						究極の冒険体験をお楽しみください
 					</DialogDescription>
