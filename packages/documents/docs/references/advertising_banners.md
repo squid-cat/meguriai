@@ -9,7 +9,47 @@
 - **メッセージ**: 「また同じような観光地巡り...」その物足りなさ、よくわかります
 - **デザインコンセプト**: 共感・感情系（温かみのある色調、親しみやすいフォント）
 - **用途・狙い**: 既存の旅行体験への不満を持つユーザーの共感を獲得し、課題認識を促進
-- **SVGコード**:
+- **SVGグラフィック**:
+
+<svg width="1200" height="628" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF3E0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFE0B2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="url(#bg1)" />
+  
+  <text x="100" y="180" font-family="Noto Sans JP, sans-serif" font-size="42" fill="#E65100" font-weight="bold">
+    「また同じような観光地巡り...」
+  </text>
+  
+  <text x="100" y="240" font-family="Noto Sans JP, sans-serif" font-size="32" fill="#5D4037">
+    その物足りなさ、よくわかります
+  </text>
+  
+  <text x="100" y="320" font-family="Noto Sans JP, sans-serif" font-size="24" fill="#666">
+    現地人だけが知る隠れ名所で、
+  </text>
+  <text x="100" y="350" font-family="Noto Sans JP, sans-serif" font-size="24" fill="#666">
+    誰も体験したことのない本物の旅を。
+  </text>
+  
+  <rect x="100" y="420" width="200" height="60" rx="30" fill="#FF6F00" />
+  <text x="200" y="455" font-family="Noto Sans JP, sans-serif" font-size="18" fill="white" text-anchor="middle">
+    OffPathを試してみる
+  </text>
+  
+  <circle cx="1000" cy="200" r="80" fill="#FF8F00" opacity="0.3" />
+  <circle cx="1050" cy="150" r="40" fill="#FFA000" opacity="0.5" />
+  <text x="950" y="520" font-family="Noto Sans JP, sans-serif" font-size="28" fill="#FF6F00" font-weight="bold">
+    OffPath
+  </text>
+</svg>
+
+<details>
+<summary>SVGコードを表示</summary>
 
 ```svg
 <svg width="1200" height="628" xmlns="http://www.w3.org/2000/svg">
@@ -49,6 +89,8 @@
   </text>
 </svg>
 ```
+
+</details>
 
 #### バナー2: 現地体験渇望型
 - **配信先**: Instagram Stories用（1080×1920px）
