@@ -33,33 +33,115 @@ export default function LandingPage() {
 
 			{/* Hero Section */}
 			<section className="py-20 px-4">
-				<div className="container mx-auto text-center max-w-4xl">
-					<h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-						誰も知らない
-						<span className="text-orange-600 block">本物の旅</span>
-						を見つけよう
-					</h1>
-					<p className="text-xl text-gray-600 mb-8 leading-relaxed">
-						観光客というよりかは現地人に人気な「真の隠れ名所」だけを厳選し、
-						<br />
-						あなたの冒険譚を作るための旅行計画サービスです。
-					</p>
-					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<Link href="/auth">
-							<Button
-								size="lg"
-								className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-3"
-							>
-								冒険を始める <Compass className="ml-2 h-5 w-5" />
-							</Button>
-						</Link>
-						<Button
-							size="lg"
-							variant="outline"
-							className="text-lg px-8 py-3 border-orange-200 hover:bg-orange-50 bg-transparent"
-						>
-							サービス詳細
-						</Button>
+				<div className="container mx-auto max-w-7xl">
+					<div className="grid lg:grid-cols-2 gap-12 items-center">
+						{/* Left Content */}
+						<div className="text-center lg:text-left">
+							<h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+								誰も知らない
+								<span className="text-orange-600 block">本物の旅</span>
+								を見つけよう
+							</h1>
+							<p className="text-xl text-gray-600 mb-8 leading-relaxed">
+								観光客というよりかは現地人に人気な「真の隠れ名所」だけを厳選し、
+								<br />
+								あなたの冒険譚を作るための旅行計画サービスです。
+							</p>
+							<div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+								<Link href="/auth">
+									<Button
+										size="lg"
+										className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-3"
+									>
+										冒険を始める <Compass className="ml-2 h-5 w-5" />
+									</Button>
+								</Link>
+								<Button
+									size="lg"
+									variant="outline"
+									className="text-lg px-8 py-3 border-orange-200 hover:bg-orange-50 bg-transparent"
+								>
+									サービス詳細
+								</Button>
+							</div>
+						</div>
+						
+						{/* Right Content - Mockup */}
+						<div className="relative">
+							<div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+								<div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6">
+									<div className="text-center mb-6">
+										<h3 className="text-2xl font-bold text-gray-900 mb-2">
+											ベトナム北部の隠れた名所発見！
+										</h3>
+										<div className="flex justify-center items-center space-x-4 text-sm text-gray-600">
+											<span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">評価 4.8</span>
+											<span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">現地限定</span>
+											<span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full">観光客 0%</span>
+										</div>
+									</div>
+									
+									<div className="bg-white rounded-lg p-4 shadow-sm">
+										<div className="w-full h-48 rounded-lg mb-4 relative overflow-hidden bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600">
+											{/* Mountain silhouettes */}
+											<div className="absolute inset-0">
+												<div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-emerald-800 via-emerald-700 to-transparent opacity-80"></div>
+												<div className="absolute bottom-0 left-10 w-20 h-24 bg-gradient-to-t from-emerald-900 to-emerald-700 transform -skew-x-12 opacity-70"></div>
+												<div className="absolute bottom-0 right-16 w-16 h-20 bg-gradient-to-t from-emerald-900 to-emerald-700 transform skew-x-6 opacity-75"></div>
+												<div className="absolute bottom-0 left-1/3 w-24 h-28 bg-gradient-to-t from-emerald-900 to-emerald-600 transform skew-x-3 opacity-65"></div>
+											</div>
+											
+											{/* Mist/fog effect */}
+											<div className="absolute inset-0 opacity-60">
+												<div className="absolute top-1/4 left-0 w-full h-16 bg-gradient-to-r from-white/30 via-white/60 to-white/30 animate-pulse"></div>
+												<div className="absolute top-1/2 right-0 w-3/4 h-12 bg-gradient-to-l from-white/40 via-white/20 to-transparent animate-pulse delay-700"></div>
+											</div>
+											
+											{/* Sun rays */}
+											<div className="absolute top-4 right-8 w-6 h-6 bg-yellow-300 rounded-full opacity-80 animate-pulse"></div>
+											<div className="absolute top-6 right-10 w-16 h-0.5 bg-gradient-to-r from-yellow-200 to-transparent opacity-60 transform rotate-12"></div>
+											<div className="absolute top-8 right-12 w-12 h-0.5 bg-gradient-to-r from-yellow-200 to-transparent opacity-50 transform rotate-45"></div>
+											
+											{/* Floating particles */}
+											<div className="absolute top-16 left-8 w-1 h-1 bg-white rounded-full opacity-70 animate-bounce delay-300"></div>
+											<div className="absolute top-20 right-20 w-1 h-1 bg-white rounded-full opacity-60 animate-bounce delay-500"></div>
+											<div className="absolute top-32 left-16 w-1 h-1 bg-white rounded-full opacity-80 animate-bounce delay-1000"></div>
+											
+											{/* Location indicator */}
+											<div className="absolute top-3 left-3 flex items-center space-x-1 bg-black/20 rounded-full px-2 py-1">
+												<MapPin className="h-3 w-3 text-white" />
+												<span className="text-white text-xs font-medium">Hidden Spot</span>
+											</div>
+										</div>
+										<h4 className="font-semibold text-lg mb-2 text-gray-900">
+											Cua Quang (アフターマーケット)
+										</h4>
+										<p className="text-gray-600 text-sm mb-3">
+											バック地方の隠れた絶景スポット。現地の人だけが知る秘密の場所で、朝霧に包まれた山々の美しさは圧巻です。
+										</p>
+										<div className="flex items-center justify-between">
+											<div className="flex items-center text-yellow-500">
+												<Star className="h-4 w-4 fill-current" />
+												<Star className="h-4 w-4 fill-current" />
+												<Star className="h-4 w-4 fill-current" />
+												<Star className="h-4 w-4 fill-current" />
+												<Star className="h-4 w-4 fill-current" />
+												<span className="ml-2 text-sm text-gray-600">現地評価 4.9</span>
+											</div>
+											<span className="text-xs text-gray-500">距離: 1.2km</span>
+										</div>
+									</div>
+								</div>
+								
+								{/* Floating elements for visual appeal */}
+								<div className="absolute -top-4 -right-4 bg-orange-500 text-white p-3 rounded-full shadow-lg">
+									<MapPin className="h-6 w-6" />
+								</div>
+								<div className="absolute -bottom-2 -left-2 bg-green-500 text-white p-2 rounded-full shadow-lg">
+									<Compass className="h-4 w-4" />
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>
