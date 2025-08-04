@@ -129,6 +129,17 @@ Next.js Frontend ←→ Hono API Backend ←→ PostgreSQL Database
 - **認証データ**: Firebase Authenticationで管理
 - **ファイルデータ**: Cloud Storage for Firebaseで管理、メタデータはPostgreSQLで管理
 
+## AI機能
+
+### 基本方針
+AI機能が必要な場合は**Amazon Bedrock**を使用する。
+
+### 実装詳細
+- **AIサービス**: Amazon Bedrock
+- **アクセス方法**: バックエンドAPIからAWS SDKを使用してアクセス
+- **モデル選択**: 要件に応じてBedrockで利用可能なモデルから選択
+- **セキュリティ**: AWS IAMによる適切な権限設定
+
 ---
 
 **基本方針**: シンプルかつセキュアなアーキテクチャで効率的な開発を目指す
