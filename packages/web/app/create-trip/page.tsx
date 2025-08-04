@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, ArrowLeft, Compass, MapPin, Zap } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Compass, MapPin, Zap, Crown } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
@@ -24,6 +24,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { ChaosLevel5Modal } from "@/components/ui/chaos-level-5-modal";
 import { apiClient } from "@/utils/api-client";
 
 export default function CreateTripPage() {
@@ -38,6 +39,8 @@ export default function CreateTripPage() {
 		avoidCrowdedAreas: false,
 	});
 	const [isLoading, setIsLoading] = useState(false);
+	const [hasChaosLevel5Access, setHasChaosLevel5Access] = useState(false);
+	const [showChaosLevel5Modal, setShowChaosLevel5Modal] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -66,7 +69,7 @@ export default function CreateTripPage() {
 			if (error) {
 				console.error("隠れ名所発見エラー:", error);
 				// サーバーからのエラーメッセージを表示
-				const errorMessage = error.error || "隠れ名所の発見に失敗しました。もう一度お試しください。";
+				const errorMessage = (error as any)?.error || "隠れ名所の発見に失敗しました。もう一度お試しください。";
 				alert(errorMessage);
 				return;
 			}
@@ -91,6 +94,28 @@ export default function CreateTripPage() {
 		"冒険重視 - 予測不可能な体験を重視",
 		"完全カオス - 何が起こるか全く分からない",
 	];
+
+	const handleChaosLevelChange = (value: number[]) => {
+		const newLevel = value[0];
+		
+		// カオス度5を選択しようとした場合
+		if (newLevel === 5 && !hasChaosLevel5Access) {
+			setShowChaosLevel5Modal(true);
+			// スライダーの値を4に戻す
+			setFormData({ ...formData, chaosLevel: [4] });
+			return;
+		}
+		
+		setFormData({ ...formData, chaosLevel: value });
+	};
+
+	const handleChaosLevel5Upgrade = async () => {
+		// ここで実際の課金処理を行う
+		// 仮実装として成功したことにする
+		setHasChaosLevel5Access(true);
+		setFormData({ ...formData, chaosLevel: [5] });
+		setShowChaosLevel5Modal(false);
+	};
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-amber-50">
@@ -220,16 +245,24 @@ export default function CreateTripPage() {
 							<CardContent className="space-y-6">
 								<div className="space-y-4">
 									<div className="flex items-center justify-between">
-										<Label>カオス度: {formData.chaosLevel[0]}/5</Label>
-										<div className="text-sm text-orange-600 font-medium">
-											{chaosDescriptions[formData.chaosLevel[0] - 1]}
+										<div className="flex items-center space-x-2">
+											<Label>カオス度: {formData.chaosLevel[0]}/5</Label>
+											{formData.chaosLevel[0] === 5 && hasChaosLevel5Access && (
+												<Crown className="h-4 w-4 text-orange-600" />
+											)}
+										</div>
+										<div className="text-sm text-orange-600 font-medium flex items-center space-x-2">
+											<span>{chaosDescriptions[formData.chaosLevel[0] - 1]}</span>
+											{formData.chaosLevel[0] === 5 && !hasChaosLevel5Access && (
+												<span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
+													プレミアム
+												</span>
+											)}
 										</div>
 									</div>
 									<Slider
 										value={formData.chaosLevel}
-										onValueChange={(value) =>
-											setFormData({ ...formData, chaosLevel: value })
-										}
+										onValueChange={handleChaosLevelChange}
 										max={5}
 										min={1}
 										step={1}
@@ -238,7 +271,12 @@ export default function CreateTripPage() {
 									<div className="flex justify-between text-xs text-gray-500">
 										<span>安全</span>
 										<span>バランス</span>
-										<span>カオス</span>
+										<div className="flex items-center space-x-1">
+											<span>カオス</span>
+											{!hasChaosLevel5Access && (
+												<Crown className="h-3 w-3 text-orange-500" />
+											)}
+										</div>
 									</div>
 								</div>
 
@@ -249,7 +287,28 @@ export default function CreateTripPage() {
 											<div className="text-sm text-orange-800">
 												<strong>高カオス度の注意：</strong>
 												<br />
-												予期しない状況や言語の壁に遭遇する可能性があります。冒険心と柔軟性が必要です。
+												{formData.chaosLevel[0] === 5 && !hasChaosLevel5Access ? (
+													<>
+														カオス度5は<strong>プレミアム機能</strong>です。
+														言語サポートなしの完全現地体験、AI確信度50%程度の未知スポット、
+														地元コミュニティイベント参加など、究極の冒険をお楽しみいただけます。
+														<br />
+														<Button
+															variant="link"
+															className="p-0 h-auto text-orange-700 underline"
+															onClick={() => setShowChaosLevel5Modal(true)}
+														>
+															今すぐアンロック（¥1,000）
+														</Button>
+													</>
+												) : (
+													<>
+														予期しない状況や言語の壁に遭遇する可能性があります。冒険心と柔軟性が必要です。
+														{formData.chaosLevel[0] === 5 && hasChaosLevel5Access && (
+															<><br /><strong>プレミアム機能が有効です。</strong>究極の冒険をお楽しみください！</>
+														)}
+													</>
+												)}
 											</div>
 										</div>
 									</div>
@@ -331,6 +390,19 @@ export default function CreateTripPage() {
 					</div>
 				</form>
 			</div>
+
+			{/* カオス度5課金モーダル */}
+			<ChaosLevel5Modal
+				isOpen={showChaosLevel5Modal}
+				onClose={() => {
+					setShowChaosLevel5Modal(false);
+					// モーダルを閉じる際、カオス度が5のままなら4に戻す
+					if (formData.chaosLevel[0] === 5 && !hasChaosLevel5Access) {
+						setFormData({ ...formData, chaosLevel: [4] });
+					}
+				}}
+				onUpgrade={handleChaosLevel5Upgrade}
+			/>
 		</div>
 	);
 }
