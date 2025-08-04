@@ -176,6 +176,98 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/discover-spots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        destination: string;
+                        duration: string;
+                        budget: string;
+                        chaosLevel: number;
+                        avoidTouristSpots: boolean;
+                        avoidJapaneseServices: boolean;
+                        avoidCrowdedAreas: boolean;
+                    };
+                };
+            };
+            responses: {
+                /** @description 隠れ名所の発見に成功 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            tripData: {
+                                destination: string;
+                                duration: string;
+                                chaosLevel: number;
+                                totalSpots: number;
+                                hiddenSpots: number;
+                                localRating: number;
+                            };
+                            hiddenSpots: {
+                                id: number;
+                                name: string;
+                                type: string;
+                                description: string;
+                                localRating: number;
+                                reviewsCount: number;
+                                language: string;
+                                priceRange: string;
+                                specialty: string;
+                                image: string;
+                            }[];
+                            itinerary: {
+                                date: string;
+                                day: number;
+                                title: string;
+                                activities: {
+                                    time: string;
+                                    activity: string;
+                                    type: string;
+                                }[];
+                            }[];
+                        };
+                    };
+                };
+                /** @description リクエストが無効 */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description サーバーエラー */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {

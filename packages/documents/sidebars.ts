@@ -1,4 +1,4 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -13,44 +13,44 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
  Create as many sidebars as you want.
  */
 const sidebars: SidebarsConfig = {
-  tutorialSidebar: [
-    'team_strengths',
-    {
-      type: 'category',
-      label: '事業仮説検証計画',
-      items: ['business_plan'],
-    },
-    {
-      type: 'category',
-      label: 'サービス設計',
-      items: ['service_design'],
-    },
-    {
-      type: 'category',
-      label: '設計書',
-      items: [
-        'designs/api-design',
-        'designs/db-design',
-        'designs/feature-design',
-      ]
-    },
-    {
-      type: 'category',
-      label: '仮説検証',
-      items: [
-        'hypothesis-validation/market_report',
-        'hypothesis-validation/advertising_banners',
-        'hypothesis-validation/banner_strategy',
-        'hypothesis-validation/interview-materials-overview',
-        'hypothesis-validation/interview-design-document',
-        'hypothesis-validation/interview-guide',
-        'hypothesis-validation/screening-questionnaire',
-        'hypothesis-validation/interview-consent-form',
-        'hypothesis-validation/interview-analysis-framework',
-        'hypothesis-validation/interview-validation-report',
-      ],
-    },
-  ],
+	tutorialSidebar: [
+		"team_strengths",
+		{
+			type: "category",
+			label: "事業仮説検証計画",
+			items: ["business_plan"],
+		},
+		{
+			type: "category",
+			label: "サービス設計",
+			items: ["service_design"],
+		},
+		{
+			type: "category",
+			label: "設計書",
+			items: [
+				"designs/api-design",
+				"designs/db-design",
+				"designs/feature-design",
+			],
+		},
+		{
+			type: "category",
+			label: "仮説検証",
+			items: [
+				"hypothesis-validation/market_report",
+				"hypothesis-validation/advertising_banners",
+				"hypothesis-validation/banner_strategy",
+				"hypothesis-validation/interview-materials-overview",
+				"hypothesis-validation/interview-design-document",
+				"hypothesis-validation/interview-guide",
+				"hypothesis-validation/screening-questionnaire",
+				"hypothesis-validation/interview-consent-form",
+				"hypothesis-validation/interview-analysis-framework",
+				"hypothesis-validation/interview-validation-report",
+			],
+		},
+	],
 };
 
 export default sidebars;

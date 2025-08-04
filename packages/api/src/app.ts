@@ -3,6 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { OPENAPI_CONFIG } from "./config";
+import discoverSpots from "./routes/discover-spots";
 import hello from "./routes/hello";
 import test from "./routes/test";
 
@@ -23,6 +24,7 @@ export function createApp() {
 	// API routes
 	app.route("/api/hello", hello);
 	app.route("/api/test", test);
+	app.route("/api", discoverSpots);
 
 	// OpenAPI documentation
 	app.doc("/doc", OPENAPI_CONFIG);
