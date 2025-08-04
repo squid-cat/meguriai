@@ -24,7 +24,7 @@ export default function LandingPage() {
 						<span className="text-2xl font-bold text-gray-900">OffPath</span>
 					</div>
 					<Link href="/auth">
-						<Button className="bg-orange-600 hover:bg-orange-700">
+						<Button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium">
 							始める <ArrowRight className="ml-2 h-4 w-4" />
 						</Button>
 					</Link>
@@ -37,12 +37,12 @@ export default function LandingPage() {
 					<div className="grid lg:grid-cols-2 gap-12 items-center">
 						{/* Left Content */}
 						<div className="text-center lg:text-left">
-							<h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+							<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight">
 								誰も知らない
-								<span className="text-orange-600 block">本物の旅</span>
+								<span className="text-orange-600 block bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">本物の旅</span>
 								を見つけよう
 							</h1>
-							<p className="text-xl text-gray-600 mb-8 leading-relaxed">
+							<p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl">
 								観光客というよりかは現地人に人気な「真の隠れ名所」だけを厳選し、
 								<br />
 								あなたの冒険譚を作るための旅行計画サービスです。
@@ -51,7 +51,7 @@ export default function LandingPage() {
 								<Link href="/auth">
 									<Button
 										size="lg"
-										className="bg-orange-600 hover:bg-orange-700 text-lg px-8 py-3"
+										className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold"
 									>
 										冒険を始める <Compass className="ml-2 h-5 w-5" />
 									</Button>
@@ -59,7 +59,7 @@ export default function LandingPage() {
 								<Button
 									size="lg"
 									variant="outline"
-									className="text-lg px-8 py-3 border-orange-200 hover:bg-orange-50 bg-transparent"
+									className="text-lg px-8 py-4 border-2 border-orange-300 text-orange-700 hover:bg-orange-50 hover:border-orange-400 bg-white/50 backdrop-blur-sm transition-all duration-200 font-medium"
 								>
 									サービス詳細
 								</Button>
@@ -155,22 +155,22 @@ export default function LandingPage() {
 						</h2>
 					</div>
 					<div className="grid md:grid-cols-2 gap-8">
-						<Card className="p-6 border-red-200 bg-red-50/50">
+						<Card className="p-6 border-red-200/60 bg-gradient-to-br from-red-50 to-pink-50 shadow-md hover:shadow-lg transition-shadow duration-200">
 							<CardContent className="p-0">
-								<h3 className="text-xl font-semibold text-red-800 mb-3">
+								<h3 className="text-xl font-bold text-red-800 mb-4 leading-tight">
 									💔「またインスタで見た景色か...」
 								</h3>
-								<p className="text-red-700">
+								<p className="text-red-700/90 leading-relaxed">
 									せっかく海外まで来たのに、結局みんなが行く場所ばかり。友達に「どうだった？」と聞かれても、特別なエピソードが何もない。
 								</p>
 							</CardContent>
 						</Card>
-						<Card className="p-6 border-red-200 bg-red-50/50">
+						<Card className="p-6 border-red-200/60 bg-gradient-to-br from-red-50 to-pink-50 shadow-md hover:shadow-lg transition-shadow duration-200">
 							<CardContent className="p-0">
-								<h3 className="text-xl font-semibold text-red-800 mb-3">
+								<h3 className="text-xl font-bold text-red-800 mb-4 leading-tight">
 									😰「現地の人に人気のお店は、どこにあるの？」
 								</h3>
-								<p className="text-red-700">
+								<p className="text-red-700/90 leading-relaxed">
 									現地語ができないから、結局観光客ばかりのお店しか行けない。でも本当は、現地の人が愛する隠れた名店を体験したい...
 								</p>
 							</CardContent>
@@ -188,40 +188,40 @@ export default function LandingPage() {
 						</h2>
 					</div>
 					<div className="grid md:grid-cols-2 gap-8">
-						<Card className="p-6 bg-white shadow-lg border-orange-200">
+						<Card className="p-6 bg-white shadow-lg hover:shadow-xl border-orange-200/60 transition-all duration-200 hover:scale-[1.02]">
 							<CardContent className="p-0">
 								<div className="flex items-center mb-4">
 									<div className="flex text-yellow-400">
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
 									</div>
-									<span className="ml-2 text-sm text-gray-600">東京都・Mさん</span>
+									<span className="ml-2 text-sm text-gray-600 font-medium">東京都・Mさん</span>
 								</div>
-								<p className="text-gray-700 italic mb-4">
+								<p className="text-gray-700 italic mb-4 leading-relaxed">
 									「現地の家族経営の小さなレストランで、おばあちゃんが手作りの料理を振る舞ってくれました。言葉は通じないけれど、温かい笑顔と心からの歓迎。一生忘れられない夜になりました。」
 								</p>
-								<p className="text-sm text-orange-600 font-semibold">📍 ベトナム・ホイアンの隠れた名店</p>
+								<p className="text-sm text-orange-600 font-semibold bg-orange-50 px-3 py-1 rounded-full inline-block">📍 ベトナム・ホイアンの隠れた名店</p>
 							</CardContent>
 						</Card>
-						<Card className="p-6 bg-white shadow-lg border-orange-200">
+						<Card className="p-6 bg-white shadow-lg hover:shadow-xl border-orange-200/60 transition-all duration-200 hover:scale-[1.02]">
 							<CardContent className="p-0">
 								<div className="flex items-center mb-4">
 									<div className="flex text-yellow-400">
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
-										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
+										<Star className="h-4 w-4 fill-current" />
 									</div>
-									<span className="ml-2 text-sm text-gray-600">大阪府・Tさん</span>
+									<span className="ml-2 text-sm text-gray-600 font-medium">大阪府・Tさん</span>
 								</div>
-								<p className="text-gray-700 italic mb-4">
+								<p className="text-gray-700 italic mb-4 leading-relaxed">
 									「地元の人だけが知る山奥の温泉を一人で探しに行きました。道に迷いそうになりながらも、やっと見つけた秘湯は絶景の中にあり、誰もいない自然の中で一人きり...こんな場所が存在するなんて信じられませんでした。」
 								</p>
-								<p className="text-sm text-orange-600 font-semibold">📍 アイスランド・地元限定の隠れ温泉</p>
+								<p className="text-sm text-orange-600 font-semibold bg-orange-50 px-3 py-1 rounded-full inline-block">📍 アイスランド・地元限定の隠れ温泉</p>
 							</CardContent>
 						</Card>
 					</div>
@@ -347,7 +347,7 @@ export default function LandingPage() {
 					<Link href="/auth">
 						<Button
 							size="lg"
-							className="bg-orange-600 hover:bg-orange-700 text-lg px-12 py-4"
+							className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-lg px-12 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold"
 						>
 							今すぐ冒険を始める <ArrowRight className="ml-2 h-5 w-5" />
 						</Button>
