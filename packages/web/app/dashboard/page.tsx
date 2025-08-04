@@ -49,28 +49,25 @@ export default function Dashboard() {
 		chaosScore: 4.2,
 	});
 
-	return (
-		<div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-amber-50">
-			{/* Header */}
-			<header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-				<div className="container mx-auto px-4 py-4 flex items-center justify-between">
-					<div className="flex items-center space-x-2">
-						<Compass className="h-8 w-8 text-orange-600" />
-						<span className="text-2xl font-bold text-gray-900">OffPath</span>
-					</div>
-					<div className="flex items-center space-x-4">
-						<Badge
-							variant="outline"
-							className="border-orange-200 text-orange-700"
-						>
-							冒険者レベル: 探検家
-						</Badge>
-						<Button variant="outline" size="sm">
-							プロフィール
-						</Button>
-					</div>
-				</div>
-			</header>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-amber-50">
+      {/* Header */}
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+            <Compass className="h-8 w-8 text-orange-600" />
+            <span className="text-2xl font-bold text-gray-900">OffPath</span>
+          </Link>
+          <div className="flex items-center space-x-4">
+            <Badge variant="outline" className="border-orange-200 text-orange-700">
+              冒険者レベル: 探検家
+            </Badge>
+            <Button variant="outline" size="sm">
+              プロフィール
+            </Button>
+          </div>
+        </div>
+      </header>
 
 			<div className="container mx-auto px-4 py-8 max-w-6xl">
 				{/* Welcome Section */}
