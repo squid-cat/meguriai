@@ -56,13 +56,15 @@ export default function LandingPage() {
 										冒険を始める
 									</Button>
 								</Link>
-								<Button
-									size="lg"
-									variant="outline"
-									className="text-lg px-8 py-4 border-2 border-orange-300 text-orange-700 hover:bg-orange-50 hover:border-orange-400 bg-white/50 backdrop-blur-sm transition-all duration-200 font-medium"
-								>
-									サービス詳細
-								</Button>
+								<a href="#problems">
+									<Button
+										size="lg"
+										variant="outline"
+										className="text-lg px-8 py-4 border-2 border-orange-300 text-orange-700 hover:bg-orange-50 hover:border-orange-400 bg-white/50 backdrop-blur-sm transition-all duration-200 font-medium"
+									>
+										サービス詳細
+									</Button>
+								</a>
 							</div>
 						</div>
 						
@@ -147,7 +149,7 @@ export default function LandingPage() {
 			</section>
 
 			{/* Problem Section */}
-			<section className="py-16 px-4 bg-white/50">
+			<section id="problems" className="py-16 px-4 bg-white/50">
 				<div className="container mx-auto max-w-4xl">
 					<div className="text-center mb-12">
 						<h2 className="text-3xl font-bold text-gray-900 mb-4">
