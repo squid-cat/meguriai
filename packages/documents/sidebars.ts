@@ -40,6 +40,15 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: '設計書',
+      items: [
+        'designs/api-design',
+        'designs/db-design',
+        'designs/feature-design',
+      ]
+    },
+    {
+      type: 'category',
       label: '参考資料',
       items: [
         'references/market_report',
