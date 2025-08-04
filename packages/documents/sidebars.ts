@@ -14,11 +14,7 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
  */
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [
-    {
-      type: 'category',
-      label: '🚀 めぐりあいチームの瞬作プロダクト開発',
-      items: ['team_strengths'],
-    },
+    'team_strengths',
     {
       type: 'category',
       label: '事業仮説検証計画',
