@@ -24,8 +24,8 @@ export default function LandingPage() {
 						<span className="text-2xl font-bold text-gray-900">OffPath</span>
 					</div>
 					<Link href="/auth">
-						<Button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium">
-							始める <ArrowRight className="ml-2 h-4 w-4" />
+						<Button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-semibold">
+							冒険を始める
 						</Button>
 					</Link>
 				</div>
@@ -37,12 +37,12 @@ export default function LandingPage() {
 					<div className="grid lg:grid-cols-2 gap-12 items-center">
 						{/* Left Content */}
 						<div className="text-center lg:text-left">
-							<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight">
+							<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 leading-[1.1] tracking-tight">
 								誰も知らない
-								<span className="text-orange-600 block bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">本物の旅</span>
+								<span className="text-orange-600 block bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent font-black">本物の旅</span>
 								を見つけよう
 							</h1>
-							<p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl">
+							<p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-2xl font-medium">
 								観光客というよりかは現地人に人気な「真の隠れ名所」だけを厳選し、
 								<br />
 								あなたの冒険譚を作るための旅行計画サービスです。
@@ -53,7 +53,7 @@ export default function LandingPage() {
 										size="lg"
 										className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-lg px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold"
 									>
-										冒険を始める <Compass className="ml-2 h-5 w-5" />
+										冒険を始める
 									</Button>
 								</Link>
 								<Button
@@ -157,20 +157,20 @@ export default function LandingPage() {
 					<div className="grid md:grid-cols-2 gap-8">
 						<Card className="p-6 border-red-200/60 bg-gradient-to-br from-red-50 to-pink-50 shadow-md hover:shadow-lg transition-shadow duration-200">
 							<CardContent className="p-0">
-								<h3 className="text-xl font-bold text-red-800 mb-4 leading-tight">
+								<h3 className="text-xl font-bold text-red-900 mb-4 leading-tight">
 									💔「またインスタで見た景色か...」
 								</h3>
-								<p className="text-red-700/90 leading-relaxed">
+								<p className="text-red-800 leading-relaxed font-medium">
 									せっかく海外まで来たのに、結局みんなが行く場所ばかり。友達に「どうだった？」と聞かれても、特別なエピソードが何もない。
 								</p>
 							</CardContent>
 						</Card>
 						<Card className="p-6 border-red-200/60 bg-gradient-to-br from-red-50 to-pink-50 shadow-md hover:shadow-lg transition-shadow duration-200">
 							<CardContent className="p-0">
-								<h3 className="text-xl font-bold text-red-800 mb-4 leading-tight">
+								<h3 className="text-xl font-bold text-red-900 mb-4 leading-tight">
 									😰「現地の人に人気のお店は、どこにあるの？」
 								</h3>
-								<p className="text-red-700/90 leading-relaxed">
+								<p className="text-red-800 leading-relaxed font-medium">
 									現地語ができないから、結局観光客ばかりのお店しか行けない。でも本当は、現地の人が愛する隠れた名店を体験したい...
 								</p>
 							</CardContent>
@@ -200,7 +200,7 @@ export default function LandingPage() {
 									</div>
 									<span className="ml-2 text-sm text-gray-600 font-medium">東京都・Mさん</span>
 								</div>
-								<p className="text-gray-700 italic mb-4 leading-relaxed">
+								<p className="text-gray-800 italic mb-4 leading-relaxed font-medium">
 									「現地の家族経営の小さなレストランで、おばあちゃんが手作りの料理を振る舞ってくれました。言葉は通じないけれど、温かい笑顔と心からの歓迎。一生忘れられない夜になりました。」
 								</p>
 								<p className="text-sm text-orange-600 font-semibold bg-orange-50 px-3 py-1 rounded-full inline-block">📍 ベトナム・ホイアンの隠れた名店</p>
@@ -218,7 +218,7 @@ export default function LandingPage() {
 									</div>
 									<span className="ml-2 text-sm text-gray-600 font-medium">大阪府・Tさん</span>
 								</div>
-								<p className="text-gray-700 italic mb-4 leading-relaxed">
+								<p className="text-gray-800 italic mb-4 leading-relaxed font-medium">
 									「地元の人だけが知る山奥の温泉を一人で探しに行きました。道に迷いそうになりながらも、やっと見つけた秘湯は絶景の中にあり、誰もいない自然の中で一人きり...こんな場所が存在するなんて信じられませんでした。」
 								</p>
 								<p className="text-sm text-orange-600 font-semibold bg-orange-50 px-3 py-1 rounded-full inline-block">📍 アイスランド・地元限定の隠れ温泉</p>
@@ -349,7 +349,7 @@ export default function LandingPage() {
 							size="lg"
 							className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-lg px-12 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-semibold"
 						>
-							今すぐ冒険を始める <ArrowRight className="ml-2 h-5 w-5" />
+							今すぐ冒険を始める
 						</Button>
 					</Link>
 				</div>
