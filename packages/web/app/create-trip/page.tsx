@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { ChaosLevel5Modal } from "@/components/ui/chaos-level-5-modal";
+import { SnsExclusionModal } from "@/components/ui/sns-exclusion-modal";
+import { GuidebookExclusionModal } from "@/components/ui/guidebook-exclusion-modal";
 import { apiClient } from "@/utils/api-client";
 
 export default function CreateTripPage() {
@@ -37,10 +39,16 @@ export default function CreateTripPage() {
 		avoidTouristSpots: true,
 		avoidJapaneseServices: true,
 		avoidCrowdedAreas: false,
+		avoidSnsPostedSpots: false,
+		avoidGuidebookSpots: false,
 	});
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasChaosLevel5Access, setHasChaosLevel5Access] = useState(false);
 	const [showChaosLevel5Modal, setShowChaosLevel5Modal] = useState(false);
+	const [hasSnsExclusionAccess, setHasSnsExclusionAccess] = useState(false);
+	const [hasGuidebookExclusionAccess, setHasGuidebookExclusionAccess] = useState(false);
+	const [showSnsExclusionModal, setShowSnsExclusionModal] = useState(false);
+	const [showGuidebookExclusionModal, setShowGuidebookExclusionModal] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -63,6 +71,8 @@ export default function CreateTripPage() {
 					avoidTouristSpots: formData.avoidTouristSpots,
 					avoidJapaneseServices: formData.avoidJapaneseServices,
 					avoidCrowdedAreas: formData.avoidCrowdedAreas,
+					avoidSnsPostedSpots: formData.avoidSnsPostedSpots,
+					avoidGuidebookSpots: formData.avoidGuidebookSpots,
 				},
 			});
 
@@ -115,6 +125,28 @@ export default function CreateTripPage() {
 		setHasChaosLevel5Access(true);
 		setFormData({ ...formData, chaosLevel: [5] });
 		setShowChaosLevel5Modal(false);
+	};
+
+	const handleSnsExclusionUpgrade = async () => {
+		// SNS除外機能の課金処理
+		setHasSnsExclusionAccess(true);
+		setFormData({ ...formData, avoidSnsPostedSpots: true });
+		setShowSnsExclusionModal(false);
+	};
+
+	const handleGuidebookExclusionUpgrade = async () => {
+		// ガイドブック除外機能の課金処理
+		setHasGuidebookExclusionAccess(true);
+		setFormData({ ...formData, avoidGuidebookSpots: true });
+		setShowGuidebookExclusionModal(false);
+	};
+
+	const handlePremiumExclusionClick = (exclusionType: 'sns' | 'guidebook') => {
+		if (exclusionType === 'sns' && !hasSnsExclusionAccess) {
+			setShowSnsExclusionModal(true);
+		} else if (exclusionType === 'guidebook' && !hasGuidebookExclusionAccess) {
+			setShowGuidebookExclusionModal(true);
+		}
 	};
 
 	return (
@@ -373,6 +405,101 @@ export default function CreateTripPage() {
 									</Label>
 								</div>
 							</div>
+
+							{/* プレミアム除外設定 */}
+							<div className="border-t pt-4">
+								<div className="flex items-center space-x-2 mb-3">
+									<Crown className="h-4 w-4 text-orange-600" />
+									<Label className="text-sm font-semibold text-orange-600">
+										プレミアム除外設定
+									</Label>
+								</div>
+								<div className="grid md:grid-cols-1 gap-3">
+									{/* SNS投稿済みスポット除外 */}
+									<div className="flex items-center justify-between p-3 rounded-lg border border-orange-200 bg-orange-50/50">
+										<div className="flex items-center space-x-2">
+											<Checkbox
+												id="avoid-sns"
+												checked={formData.avoidSnsPostedSpots}
+												disabled={!hasSnsExclusionAccess}
+												onCheckedChange={(checked) => {
+													if (!hasSnsExclusionAccess) {
+														handlePremiumExclusionClick('sns');
+														return;
+													}
+													setFormData({
+														...formData,
+														avoidSnsPostedSpots: checked as boolean,
+													});
+												}}
+											/>
+											<div>
+												<Label htmlFor="avoid-sns" className="text-sm font-medium cursor-pointer">
+													SNS投稿済みスポットを除外
+													{hasSnsExclusionAccess && (
+														<Crown className="inline h-3 w-3 text-orange-600 ml-1" />
+													)}
+												</Label>
+												<p className="text-xs text-gray-600">
+													Instagram/TikTok等で投稿済みの場所を自動除外
+												</p>
+											</div>
+										</div>
+										{!hasSnsExclusionAccess && (
+											<Button
+												variant="outline"
+												size="sm"
+												onClick={() => handlePremiumExclusionClick('sns')}
+												className="text-orange-600 border-orange-300 hover:bg-orange-50"
+											>
+												¥800
+											</Button>
+										)}
+									</div>
+
+									{/* ガイドブック掲載スポット除外 */}
+									<div className="flex items-center justify-between p-3 rounded-lg border border-orange-200 bg-orange-50/50">
+										<div className="flex items-center space-x-2">
+											<Checkbox
+												id="avoid-guidebook"
+												checked={formData.avoidGuidebookSpots}
+												disabled={!hasGuidebookExclusionAccess}
+												onCheckedChange={(checked) => {
+													if (!hasGuidebookExclusionAccess) {
+														handlePremiumExclusionClick('guidebook');
+														return;
+													}
+													setFormData({
+														...formData,
+														avoidGuidebookSpots: checked as boolean,
+													});
+												}}
+											/>
+											<div>
+												<Label htmlFor="avoid-guidebook" className="text-sm font-medium cursor-pointer">
+													ガイドブック掲載スポットを除外
+													{hasGuidebookExclusionAccess && (
+														<Crown className="inline h-3 w-3 text-orange-600 ml-1" />
+													)}
+												</Label>
+												<p className="text-xs text-gray-600">
+													地球の歩き方等の主要ガイドブック掲載場所を除外
+												</p>
+											</div>
+										</div>
+										{!hasGuidebookExclusionAccess && (
+											<Button
+												variant="outline"
+												size="sm"
+												onClick={() => handlePremiumExclusionClick('guidebook')}
+												className="text-orange-600 border-orange-300 hover:bg-orange-50"
+											>
+												¥1,000
+											</Button>
+										)}
+									</div>
+								</div>
+							</div>
 						</CardContent>
 					</Card>
 
@@ -402,6 +529,20 @@ export default function CreateTripPage() {
 					}
 				}}
 				onUpgrade={handleChaosLevel5Upgrade}
+			/>
+
+			{/* SNS除外課金モーダル */}
+			<SnsExclusionModal
+				isOpen={showSnsExclusionModal}
+				onClose={() => setShowSnsExclusionModal(false)}
+				onUpgrade={handleSnsExclusionUpgrade}
+			/>
+
+			{/* ガイドブック除外課金モーダル */}
+			<GuidebookExclusionModal
+				isOpen={showGuidebookExclusionModal}
+				onClose={() => setShowGuidebookExclusionModal(false)}
+				onUpgrade={handleGuidebookExclusionUpgrade}
 			/>
 		</div>
 	);
