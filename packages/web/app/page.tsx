@@ -43,9 +43,9 @@ export default function LandingPage() {
 						を見つけよう
 					</h1>
 					<p className="text-xl text-gray-600 mb-8 leading-relaxed">
-						母国語のレビューが存在しない「真の隠れ名所」だけを厳選。
+						観光客というよりかは現地人に人気な「真の隠れ名所」だけを厳選し、
 						<br />
-						現地人に愛される本物の体験を、予測不可能な旅程で提供します。
+						あなたの冒険譚を作るための旅行計画サービスです。
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<Link href="/auth">
@@ -89,10 +89,10 @@ export default function LandingPage() {
 						<Card className="p-6 border-red-200 bg-red-50/50">
 							<CardContent className="p-0">
 								<h3 className="text-xl font-semibold text-red-800 mb-3">
-									「本当に美味しい現地料理が食べたい」
+									「ハズレのお店に行くのが怖い」
 								</h3>
 								<p className="text-red-700">
-									日本語レビューがあるところしか行けない。現地人が本当に愛する場所が分からない。
+									本当に現地の人に人気のお店を探したいけど現地語が分からないし、他の観光客のレビューがあるところしか行けない。
 								</p>
 							</CardContent>
 						</Card>
@@ -108,7 +108,7 @@ export default function LandingPage() {
 							OffPathが解決します
 						</h2>
 						<p className="text-xl text-gray-600">
-							現地語限定の情報解析で、真の隠れ名所だけを発見
+							現地メディア情報やマップアプリを解析し、観光客がまだ知らない真の隠れ名所を発見
 						</p>
 					</div>
 					<div className="grid md:grid-cols-3 gap-8">
@@ -121,7 +121,7 @@ export default function LandingPage() {
 									隠れ名所発見エンジン
 								</h3>
 								<p className="text-gray-600">
-									現地語レビューを解析し、観光客がまだ知らない高評価スポットを発見
+									現地メディア情報やマップアプリを解析し、話せる言語でのレビューや旅行記事が存在しない場所を発見
 								</p>
 							</CardContent>
 						</Card>
