@@ -27,19 +27,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'インタビュー設計',
-      items: [
-        'designs/interview-materials-overview',
-        'designs/interview-design-document',
-        'designs/interview-guide',
-        'designs/screening-questionnaire',
-        'designs/interview-consent-form',
-        'designs/interview-analysis-framework',
-        'designs/interview-validation-report',
-      ],
-    },
-    {
-      type: 'category',
       label: '設計書',
       items: [
         'designs/api-design',
@@ -49,11 +36,18 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '参考資料',
+      label: '仮説検証',
       items: [
-        'references/market_report',
-        'references/advertising_banners',
-        'references/banner_strategy',
+        'hypothesis-validation/market_report',
+        'hypothesis-validation/advertising_banners',
+        'hypothesis-validation/banner_strategy',
+        'hypothesis-validation/interview-materials-overview',
+        'hypothesis-validation/interview-design-document',
+        'hypothesis-validation/interview-guide',
+        'hypothesis-validation/screening-questionnaire',
+        'hypothesis-validation/interview-consent-form',
+        'hypothesis-validation/interview-analysis-framework',
+        'hypothesis-validation/interview-validation-report',
       ],
     },
   ],
