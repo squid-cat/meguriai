@@ -33,11 +33,11 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'インタビュー設計',
       items: [
+        'designs/interview-materials-overview',
         'designs/interview-design-document',
         'designs/interview-guide',
         'designs/screening-questionnaire',
         'designs/interview-consent-form',
-        'designs/interview-materials-overview',
         'designs/interview-analysis-framework',
         'designs/interview-validation-report',
       ],
