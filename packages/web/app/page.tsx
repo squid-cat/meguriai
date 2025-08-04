@@ -34,9 +34,6 @@ export default function LandingPage() {
 			{/* Hero Section */}
 			<section className="py-20 px-4">
 				<div className="container mx-auto text-center max-w-4xl">
-					<Badge className="mb-6 bg-orange-100 text-orange-800 border-orange-200">
-						真の隠れ名所発見サービス
-					</Badge>
 					<h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
 						誰も知らない
 						<span className="text-orange-600 block">本物の旅</span>
@@ -79,21 +76,70 @@ export default function LandingPage() {
 						<Card className="p-6 border-red-200 bg-red-50/50">
 							<CardContent className="p-0">
 								<h3 className="text-xl font-semibold text-red-800 mb-3">
-									「また同じような観光地巡り...」
+									💔「またインスタで見た景色か...」
 								</h3>
 								<p className="text-red-700">
-									SNSで見たことある景色ばかり。有名観光地は一通り行き尽くした感がある。
+									せっかく海外まで来たのに、結局みんなが行く場所ばかり。友達に「どうだった？」と聞かれても、特別なエピソードが何もない。
 								</p>
 							</CardContent>
 						</Card>
 						<Card className="p-6 border-red-200 bg-red-50/50">
 							<CardContent className="p-0">
 								<h3 className="text-xl font-semibold text-red-800 mb-3">
-									「ハズレのお店に行くのが怖い」
+									😰「現地の人に人気のお店は、どこにあるの？」
 								</h3>
 								<p className="text-red-700">
-									本当に現地の人に人気のお店を探したいけど現地語が分からないし、他の観光客のレビューがあるところしか行けない。
+									現地語ができないから、結局観光客ばかりのお店しか行けない。でも本当は、現地の人が愛する隠れた名店を体験したい...
 								</p>
+							</CardContent>
+						</Card>
+					</div>
+				</div>
+			</section>
+
+			{/* Testimonial Section */}
+			<section className="py-16 px-4 bg-gradient-to-r from-orange-50 to-amber-50">
+				<div className="container mx-auto max-w-4xl">
+					<div className="text-center mb-12">
+						<h2 className="text-3xl font-bold text-gray-900 mb-4">
+							<span className="text-orange-600">本物の旅</span>を体験した人たち
+						</h2>
+					</div>
+					<div className="grid md:grid-cols-2 gap-8">
+						<Card className="p-6 bg-white shadow-lg border-orange-200">
+							<CardContent className="p-0">
+								<div className="flex items-center mb-4">
+									<div className="flex text-yellow-400">
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+									</div>
+									<span className="ml-2 text-sm text-gray-600">東京都・Mさん</span>
+								</div>
+								<p className="text-gray-700 italic mb-4">
+									「現地の家族経営の小さなレストランで、おばあちゃんが手作りの料理を振る舞ってくれました。言葉は通じないけれど、温かい笑顔と心からの歓迎。一生忘れられない夜になりました。」
+								</p>
+								<p className="text-sm text-orange-600 font-semibold">📍 ベトナム・ホイアンの隠れた名店</p>
+							</CardContent>
+						</Card>
+						<Card className="p-6 bg-white shadow-lg border-orange-200">
+							<CardContent className="p-0">
+								<div className="flex items-center mb-4">
+									<div className="flex text-yellow-400">
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+										<Star className="h-5 w-5 fill-current" />
+									</div>
+									<span className="ml-2 text-sm text-gray-600">大阪府・Tさん</span>
+								</div>
+								<p className="text-gray-700 italic mb-4">
+									「地元の人だけが知る山奥の温泉を一人で探しに行きました。道に迷いそうになりながらも、やっと見つけた秘湯は絶景の中にあり、誰もいない自然の中で一人きり...こんな場所が存在するなんて信じられませんでした。」
+								</p>
+								<p className="text-sm text-orange-600 font-semibold">📍 アイスランド・地元限定の隠れ温泉</p>
 							</CardContent>
 						</Card>
 					</div>
