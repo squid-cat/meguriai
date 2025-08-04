@@ -164,6 +164,7 @@ export default function TripResultsPage() {
           {/* Hidden Spots Tab */}
           <TabsContent value="spots" className="space-y-6">
             <div className="grid gap-6">
+              {/* ToDo: あとでみる */}
               {hiddenSpots.map((spot) => (
                 <Card key={spot.id} className="border-orange-200 overflow-hidden">
                   <div className="md:flex">
