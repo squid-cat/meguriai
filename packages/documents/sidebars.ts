@@ -15,16 +15,8 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars: SidebarsConfig = {
 	tutorialSidebar: [
 		"team_strengths",
-		{
-			type: "category",
-			label: "事業仮説検証計画",
-			items: ["business_plan"],
-		},
-		{
-			type: "category",
-			label: "サービス設計",
-			items: ["service_design"],
-		},
+		"service_design",
+		"business_plan",
 		{
 			type: "category",
 			label: "設計書",
