@@ -73,7 +73,7 @@ export default function Dashboard() {
 				{/* Welcome Section */}
 				<div className="mb-8">
 					<h1 className="text-3xl font-bold text-gray-900 mb-2">
-						おかえりなさい、冒険者！
+						おかえりなさい、冒険者さん！
 					</h1>
 					<p className="text-gray-600">次はどこの隠れ名所を発見しますか？</p>
 				</div>
