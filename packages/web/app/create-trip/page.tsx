@@ -24,9 +24,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { ChaosLevel5Modal } from "@/components/ui/chaos-level-5-modal";
-import { SnsExclusionModal } from "@/components/ui/sns-exclusion-modal";
-import { GuidebookExclusionModal } from "@/components/ui/guidebook-exclusion-modal";
+import { PremiumPlanModal } from "@/components/ui/premium-plan-modal";
 import { apiClient } from "@/utils/api-client";
 
 export default function CreateTripPage() {
@@ -43,12 +41,11 @@ export default function CreateTripPage() {
 		avoidGuidebookSpots: false,
 	});
 	const [isLoading, setIsLoading] = useState(false);
-	const [hasChaosLevel5Access, setHasChaosLevel5Access] = useState(false);
-	const [showChaosLevel5Modal, setShowChaosLevel5Modal] = useState(false);
-	const [hasSnsExclusionAccess, setHasSnsExclusionAccess] = useState(false);
-	const [hasGuidebookExclusionAccess, setHasGuidebookExclusionAccess] = useState(false);
-	const [showSnsExclusionModal, setShowSnsExclusionModal] = useState(false);
-	const [showGuidebookExclusionModal, setShowGuidebookExclusionModal] = useState(false);
+	const [premiumPlanType, setPremiumPlanType] = useState<null | 'monthly' | 'yearly'>(null);
+	const [showPremiumPlanModal, setShowPremiumPlanModal] = useState(false);
+	
+	// プレミアム機能へのアクセス判定（デフォルトは無効）
+	const hasPremiumAccess = false; // 常に無効状態
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -109,8 +106,8 @@ export default function CreateTripPage() {
 		const newLevel = value[0];
 		
 		// カオス度5を選択しようとした場合
-		if (newLevel === 5 && !hasChaosLevel5Access) {
-			setShowChaosLevel5Modal(true);
+		if (newLevel === 5 && !hasPremiumAccess) {
+			setShowPremiumPlanModal(true);
 			// スライダーの値を4に戻す
 			setFormData({ ...formData, chaosLevel: [4] });
 			return;
@@ -119,33 +116,24 @@ export default function CreateTripPage() {
 		setFormData({ ...formData, chaosLevel: value });
 	};
 
-	const handleChaosLevel5Upgrade = async () => {
+	const handlePremiumPlanUpgrade = async (planType: 'monthly' | 'yearly') => {
 		// ここで実際の課金処理を行う
 		// 仮実装として成功したことにする
-		setHasChaosLevel5Access(true);
-		setFormData({ ...formData, chaosLevel: [5] });
-		setShowChaosLevel5Modal(false);
+		setPremiumPlanType(planType);
+		setShowPremiumPlanModal(false);
+		
+		// プレミアム機能を有効化
+		setFormData({
+			...formData,
+			chaosLevel: [5],
+			avoidSnsPostedSpots: true,
+			avoidGuidebookSpots: true,
+		});
 	};
 
-	const handleSnsExclusionUpgrade = async () => {
-		// SNS除外機能の課金処理
-		setHasSnsExclusionAccess(true);
-		setFormData({ ...formData, avoidSnsPostedSpots: true });
-		setShowSnsExclusionModal(false);
-	};
-
-	const handleGuidebookExclusionUpgrade = async () => {
-		// ガイドブック除外機能の課金処理
-		setHasGuidebookExclusionAccess(true);
-		setFormData({ ...formData, avoidGuidebookSpots: true });
-		setShowGuidebookExclusionModal(false);
-	};
-
-	const handlePremiumExclusionClick = (exclusionType: 'sns' | 'guidebook') => {
-		if (exclusionType === 'sns' && !hasSnsExclusionAccess) {
-			setShowSnsExclusionModal(true);
-		} else if (exclusionType === 'guidebook' && !hasGuidebookExclusionAccess) {
-			setShowGuidebookExclusionModal(true);
+	const handlePremiumFeatureClick = () => {
+		if (!hasPremiumAccess) {
+			setShowPremiumPlanModal(true);
 		}
 	};
 
@@ -279,13 +267,13 @@ export default function CreateTripPage() {
 									<div className="flex items-center justify-between">
 										<div className="flex items-center space-x-2">
 											<Label>カオス度: {formData.chaosLevel[0]}/5</Label>
-											{formData.chaosLevel[0] === 5 && hasChaosLevel5Access && (
+											{formData.chaosLevel[0] === 5 && hasPremiumAccess && (
 												<Crown className="h-4 w-4 text-orange-600" />
 											)}
 										</div>
 										<div className="text-sm text-orange-600 font-medium flex items-center space-x-2">
 											<span>{chaosDescriptions[formData.chaosLevel[0] - 1]}</span>
-											{formData.chaosLevel[0] === 5 && !hasChaosLevel5Access && (
+											{formData.chaosLevel[0] === 5 && !hasPremiumAccess && (
 												<span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
 													プレミアム
 												</span>
@@ -305,7 +293,7 @@ export default function CreateTripPage() {
 										<span>バランス</span>
 										<div className="flex items-center space-x-1">
 											<span>カオス</span>
-											{!hasChaosLevel5Access && (
+											{!hasPremiumAccess && (
 												<Crown className="h-3 w-3 text-orange-500" />
 											)}
 										</div>
@@ -319,24 +307,25 @@ export default function CreateTripPage() {
 											<div className="text-sm text-orange-800">
 												<strong>高カオス度の注意：</strong>
 												<br />
-												{formData.chaosLevel[0] === 5 && !hasChaosLevel5Access ? (
+												{formData.chaosLevel[0] === 5 && !hasPremiumAccess ? (
 													<>
 														カオス度5は<strong>プレミアム機能</strong>です。
-														言語サポートなしの完全現地体験、AI確信度50%程度の未知スポット、
-														地元コミュニティイベント参加など、究極の冒険をお楽しみいただけます。
+														言語サポートなし・AI確信度50%の未知スポット・地元コミュニティ参加、
+														SNS未投稿の完全未開拓地、ガイドブック未掲載の真の隠れ名所など、
+														究極の冒険体験をまとめてお楽しみいただけます。
 														<br />
 														<Button
 															variant="link"
 															className="p-0 h-auto text-orange-700 underline"
-															onClick={() => setShowChaosLevel5Modal(true)}
+															onClick={() => setShowPremiumPlanModal(true)}
 														>
-															今すぐアンロック（¥1,000）
+															プレミアムプランを見る（月額¥1,980〜）
 														</Button>
 													</>
 												) : (
 													<>
 														予期しない状況や言語の壁に遭遇する可能性があります。冒険心と柔軟性が必要です。
-														{formData.chaosLevel[0] === 5 && hasChaosLevel5Access && (
+														{formData.chaosLevel[0] === 5 && hasPremiumAccess && (
 															<><br /><strong>プレミアム機能が有効です。</strong>究極の冒険をお楽しみください！</>
 														)}
 													</>
@@ -408,97 +397,132 @@ export default function CreateTripPage() {
 
 							{/* プレミアム除外設定 */}
 							<div className="border-t pt-4">
-								<div className="flex items-center space-x-2 mb-3">
-									<Crown className="h-4 w-4 text-orange-600" />
-									<Label className="text-sm font-semibold text-orange-600">
-										プレミアム除外設定
-									</Label>
+								<div className="flex items-center justify-between mb-3">
+									<div className="flex items-center space-x-2">
+										<Crown className="h-4 w-4 text-orange-600" />
+										<Label className="text-sm font-semibold text-orange-600">
+											プレミアム除外設定
+										</Label>
+										{hasPremiumAccess && (
+											<span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+												{premiumPlanType === 'monthly' ? '月額プラン' : '年額プラン'}有効
+											</span>
+										)}
+									</div>
+									{!hasPremiumAccess && (
+										<Button
+											variant="outline"
+											size="sm"
+											onClick={handlePremiumFeatureClick}
+											className="text-orange-600 border-orange-300 hover:bg-orange-50"
+										>
+											プランを見る
+										</Button>
+									)}
 								</div>
+								
 								<div className="grid md:grid-cols-1 gap-3">
 									{/* SNS投稿済みスポット除外 */}
-									<div className="flex items-center justify-between p-3 rounded-lg border border-orange-200 bg-orange-50/50">
-										<div className="flex items-center space-x-2">
-											<Checkbox
-												id="avoid-sns"
-												checked={formData.avoidSnsPostedSpots}
-												disabled={!hasSnsExclusionAccess}
-												onCheckedChange={(checked) => {
-													if (!hasSnsExclusionAccess) {
-														handlePremiumExclusionClick('sns');
-														return;
-													}
-													setFormData({
-														...formData,
-														avoidSnsPostedSpots: checked as boolean,
-													});
-												}}
-											/>
-											<div>
-												<Label htmlFor="avoid-sns" className="text-sm font-medium cursor-pointer">
-													SNS投稿済みスポットを除外
-													{hasSnsExclusionAccess && (
-														<Crown className="inline h-3 w-3 text-orange-600 ml-1" />
+									<div 
+										className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+											hasPremiumAccess 
+												? 'border-green-300 bg-green-50' 
+												: 'border-orange-300 bg-orange-50 hover:border-orange-400 hover:bg-orange-100'
+										}`}
+										onClick={() => {
+											if (!hasPremiumAccess) {
+												handlePremiumFeatureClick();
+											}
+										}}
+									>
+										<div className="flex items-center space-x-3">
+											<div className={`w-5 h-5 rounded border-2 ${
+												hasPremiumAccess 
+													? 'border-green-500 bg-green-500' 
+													: 'border-orange-400 bg-white'
+											}`}>
+											</div>
+											<div className="flex-1">
+												<div className="flex items-center justify-between">
+													<Label htmlFor="avoid-sns" className="text-sm font-semibold cursor-pointer">
+														SNS投稿済みスポットを除外
+													</Label>
+													{!hasPremiumAccess && (
+														<span className="text-xs bg-orange-200 text-orange-800 px-3 py-1 rounded-full font-medium">
+															プレミアム
+														</span>
 													)}
-												</Label>
-												<p className="text-xs text-gray-600">
-													Instagram/TikTok等で投稿済みの場所を自動除外
+												</div>
+												<p className="text-xs text-gray-600 mt-1">
+													Instagram/TikTok等で投稿済みの場所を自動除外して完全未開拓地のみ
 												</p>
 											</div>
 										</div>
-										{!hasSnsExclusionAccess && (
-											<Button
-												variant="outline"
-												size="sm"
-												onClick={() => handlePremiumExclusionClick('sns')}
-												className="text-orange-600 border-orange-300 hover:bg-orange-50"
-											>
-												¥800
-											</Button>
-										)}
 									</div>
 
 									{/* ガイドブック掲載スポット除外 */}
-									<div className="flex items-center justify-between p-3 rounded-lg border border-orange-200 bg-orange-50/50">
-										<div className="flex items-center space-x-2">
-											<Checkbox
-												id="avoid-guidebook"
-												checked={formData.avoidGuidebookSpots}
-												disabled={!hasGuidebookExclusionAccess}
-												onCheckedChange={(checked) => {
-													if (!hasGuidebookExclusionAccess) {
-														handlePremiumExclusionClick('guidebook');
-														return;
-													}
-													setFormData({
-														...formData,
-														avoidGuidebookSpots: checked as boolean,
-													});
-												}}
-											/>
-											<div>
-												<Label htmlFor="avoid-guidebook" className="text-sm font-medium cursor-pointer">
-													ガイドブック掲載スポットを除外
-													{hasGuidebookExclusionAccess && (
-														<Crown className="inline h-3 w-3 text-orange-600 ml-1" />
+									<div 
+										className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+											hasPremiumAccess 
+												? 'border-green-300 bg-green-50' 
+												: 'border-orange-300 bg-orange-50 hover:border-orange-400 hover:bg-orange-100'
+										}`}
+										onClick={() => {
+											if (!hasPremiumAccess) {
+												handlePremiumFeatureClick();
+											}
+										}}
+									>
+										<div className="flex items-center space-x-3">
+											<div className={`w-5 h-5 rounded border-2 ${
+												hasPremiumAccess 
+													? 'border-green-500 bg-green-500' 
+													: 'border-orange-400 bg-white'
+											}`}>
+											</div>
+											<div className="flex-1">
+												<div className="flex items-center justify-between">
+													<Label htmlFor="avoid-guidebook" className="text-sm font-semibold cursor-pointer">
+														ガイドブック掲載スポットを除外
+													</Label>
+													{!hasPremiumAccess && (
+														<span className="text-xs bg-orange-200 text-orange-800 px-3 py-1 rounded-full font-medium">
+															プレミアム
+														</span>
 													)}
-												</Label>
-												<p className="text-xs text-gray-600">
-													地球の歩き方等の主要ガイドブック掲載場所を除外
+												</div>
+												<p className="text-xs text-gray-600 mt-1">
+													地球の歩き方等の主要ガイドブック掲載場所を除外して真の隠れ名所のみ
 												</p>
 											</div>
 										</div>
-										{!hasGuidebookExclusionAccess && (
-											<Button
-												variant="outline"
-												size="sm"
-												onClick={() => handlePremiumExclusionClick('guidebook')}
-												className="text-orange-600 border-orange-300 hover:bg-orange-50"
-											>
-												¥1,000
-											</Button>
-										)}
 									</div>
 								</div>
+								
+								{/* プレミアムプランの価値提案 */}
+								{!hasPremiumAccess && (
+									<div className="mt-4 p-4 rounded-lg bg-gradient-to-r from-orange-100 to-red-100 border border-orange-200">
+										<div className="flex items-start space-x-3">
+											<Crown className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
+											<div>
+												<h4 className="font-medium text-gray-900 mb-2">🎯 プレミアムで得られる体験</h4>
+												<ul className="text-sm text-gray-700 space-y-1">
+													<li>• 誰も知らない「完全未開拓地」での独占体験</li>
+													<li>• SNSやガイドブックにない真の隠れ名所</li>
+													<li>• カオス度5の究極予測不可能体験</li>
+													<li>• 帰国後に語れるユニークな冒険譚</li>
+												</ul>
+												<Button
+													variant="link"
+													className="p-0 h-auto text-orange-700 underline mt-2"
+													onClick={handlePremiumFeatureClick}
+												>
+													月額¥1,980〜で全機能アンロック →
+												</Button>
+											</div>
+										</div>
+									</div>
+								)}
 							</div>
 						</CardContent>
 					</Card>
@@ -518,31 +542,17 @@ export default function CreateTripPage() {
 				</form>
 			</div>
 
-			{/* カオス度5課金モーダル */}
-			<ChaosLevel5Modal
-				isOpen={showChaosLevel5Modal}
+			{/* プレミアムプラン課金モーダル */}
+			<PremiumPlanModal
+				isOpen={showPremiumPlanModal}
 				onClose={() => {
-					setShowChaosLevel5Modal(false);
+					setShowPremiumPlanModal(false);
 					// モーダルを閉じる際、カオス度が5のままなら4に戻す
-					if (formData.chaosLevel[0] === 5 && !hasChaosLevel5Access) {
+					if (formData.chaosLevel[0] === 5 && !hasPremiumAccess) {
 						setFormData({ ...formData, chaosLevel: [4] });
 					}
 				}}
-				onUpgrade={handleChaosLevel5Upgrade}
-			/>
-
-			{/* SNS除外課金モーダル */}
-			<SnsExclusionModal
-				isOpen={showSnsExclusionModal}
-				onClose={() => setShowSnsExclusionModal(false)}
-				onUpgrade={handleSnsExclusionUpgrade}
-			/>
-
-			{/* ガイドブック除外課金モーダル */}
-			<GuidebookExclusionModal
-				isOpen={showGuidebookExclusionModal}
-				onClose={() => setShowGuidebookExclusionModal(false)}
-				onUpgrade={handleGuidebookExclusionUpgrade}
+				onUpgrade={handlePremiumPlanUpgrade}
 			/>
 		</div>
 	);
