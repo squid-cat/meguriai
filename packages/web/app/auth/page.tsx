@@ -70,12 +70,12 @@ export default function AuthPage() {
 						{/* Google認証 */}
 						<Button
 							onClick={handleGoogleAuth}
-							disabled={isLoading}
-							className="w-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 shadow-sm"
+							disabled={true}
+							className="w-full bg-gray-100 text-gray-500 border border-gray-200 shadow-sm cursor-not-allowed opacity-60"
 							size="lg"
 						>
-							<Chrome className="mr-2 h-5 w-5 text-blue-500" />
-							{isLoading ? "ログイン中..." : "Googleでログイン"}
+							<Chrome className="mr-2 h-5 w-5 text-gray-400" />
+							Googleでログイン（準備中）
 						</Button>
 
 						<div className="relative">
@@ -101,9 +101,14 @@ export default function AuthPage() {
 
 						<div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mt-4">
 							<p className="text-sm text-orange-800">
+								<strong>Google認証について：</strong>
+								<br />
+								現在準備中です。実装が完了次第、ご利用いただけるようになります。
+							</p>
+							<p className="text-sm text-orange-800 mt-2">
 								<strong>ゲストログインについて：</strong>
 								<br />
-								Google認証と同様の機能をお試しいただけます。アカウント作成なしで、すぐにOffPathの全機能を体験できます。
+								アカウント作成なしで、すぐにOffPathの全機能を体験できます。
 							</p>
 						</div>
 					</CardContent>
