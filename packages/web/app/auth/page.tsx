@@ -75,7 +75,7 @@ export default function AuthPage() {
 							size="lg"
 						>
 							<Chrome className="mr-2 h-5 w-5 text-gray-400" />
-							Googleでログイン（準備中）
+							Googleでログイン（開発中）
 						</Button>
 
 						<div className="relative">
@@ -103,7 +103,7 @@ export default function AuthPage() {
 							<p className="text-sm text-orange-800">
 								<strong>Google認証について：</strong>
 								<br />
-								現在準備中です。実装が完了次第、ご利用いただけるようになります。
+								現在開発中です。実装が完了次第、ご利用いただけるようになります。
 							</p>
 							<p className="text-sm text-orange-800 mt-2">
 								<strong>ゲストログインについて：</strong>

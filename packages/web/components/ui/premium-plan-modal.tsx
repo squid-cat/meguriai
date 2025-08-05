@@ -179,10 +179,10 @@ export function PremiumPlanModal({
 								handleModalEvent('upgrade_click', selectedPlan);
 								handleUpgrade(selectedPlan);
 							}}
-							disabled={isProcessing}
-							className="flex-1 bg-orange-600 hover:bg-orange-700 font-semibold"
+							disabled={true}
+							className="flex-1 bg-gray-100 text-gray-500 border border-gray-200 !cursor-not-allowed opacity-60"
 						>
-							{isProcessing ? "処理中..." : "プレミアムを開始"}
+							プレミアムを開始（開発中）
 						</Button>
 					</div>
 				</div>
