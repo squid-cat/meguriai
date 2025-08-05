@@ -413,6 +413,7 @@ export default function CreateTripPage() {
 										<Button
 											variant="outline"
 											size="sm"
+											type="button"
 											onClick={handlePremiumFeatureClick}
 											className="text-orange-600 border-orange-300 hover:bg-orange-50"
 										>
