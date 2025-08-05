@@ -535,8 +535,17 @@ export default function CreateTripPage() {
 							className="bg-orange-600 hover:bg-orange-700 px-12 py-3 text-lg"
 							disabled={isLoading}
 						>
-							<Compass className="mr-2 h-5 w-5" />
-							{isLoading ? "隠れ名所を発見中..." : "隠れ名所を発見する"}
+							{isLoading ? (
+								<>
+									<div className="mr-2 h-5 w-5 animate-spin border-2 border-white border-t-transparent rounded-full" />
+									隠れ名所を発見中...
+								</>
+							) : (
+								<>
+									<Compass className="mr-2 h-5 w-5" />
+									隠れ名所を発見する
+								</>
+							)}
 						</Button>
 					</div>
 				</form>
