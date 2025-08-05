@@ -62,9 +62,6 @@ export default function Dashboard() {
             <Badge variant="outline" className="border-orange-200 text-orange-700">
               冒険者レベル: 探検家
             </Badge>
-            <Button variant="outline" size="sm">
-              プロフィール
-            </Button>
           </div>
         </div>
       </header>
