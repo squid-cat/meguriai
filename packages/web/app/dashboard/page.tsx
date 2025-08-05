@@ -131,10 +131,10 @@ export default function Dashboard() {
 							<CardContent>
 								<Link href="/create-trip">
 									<Button
-										className="w-full bg-orange-600 hover:bg-orange-700"
+										className="w-full bg-orange-600 hover:bg-orange-700 text-lg font-bold py-6"
 										size="lg"
 									>
-										<Plus className="mr-2 h-5 w-5" />
+										<Plus className="mr-3 h-6 w-6" />
 										旅行を計画する
 									</Button>
 								</Link>
