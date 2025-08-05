@@ -97,13 +97,13 @@ export default function TripResultsPage() {
 						</div>
 					</div>
 					<div className="flex items-center space-x-2">
-						<Button variant="outline" size="sm">
+						<Button variant="outline" size="sm" disabled={true} className="cursor-not-allowed bg-gray-100 text-gray-500 border border-gray-200 opacity-60">
 							<Share2 className="h-4 w-4 mr-2" />
-							共有
+							共有（開発中）
 						</Button>
-						<Button variant="outline" size="sm">
+						<Button variant="outline" size="sm" disabled={true} className="cursor-not-allowed bg-gray-100 text-gray-500 border border-gray-200 opacity-60">
 							<Download className="h-4 w-4 mr-2" />
-							保存
+							保存（開発中）
 						</Button>
 					</div>
 				</div>
@@ -343,9 +343,9 @@ export default function TripResultsPage() {
 
 				{/* Action Buttons */}
 				<div className="flex justify-center space-x-4 mt-8">
-					<Button size="lg" className="bg-orange-600 hover:bg-orange-700">
+          <Button size="lg" disabled={true} className="cursor-not-allowed bg-gray-100 text-gray-500 border border-gray-200 opacity-60">
 						<Download className="mr-2 h-5 w-5" />
-						旅程をダウンロード
+						旅程をダウンロード（開発中）
 					</Button>
 					<Link href="/create-trip">
 						<Button
